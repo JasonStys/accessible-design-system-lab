@@ -1,0 +1,49 @@
+<!--
+  File: vanilla.html
+  Purpose: Demonstrate progressive enhancement with semantic HTML and framework-independent JavaScript.
+  Major regions: navigation, native dialog trigger, native dialog, and status output.
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Framework-independent native dialog example."
+    />
+    <title>Vanilla interoperability example</title>
+  </head>
+  <body>
+    <a class="ds-skip-link" href="#vanilla-main">Skip to example</a>
+    <main class="demo-shell" id="vanilla-main">
+      <nav aria-label="Example navigation"><a href="/">React catalog</a></nav>
+      <h1>Vanilla interoperability</h1>
+      <p>
+        The button and dialog work from semantic HTML plus a small ES module.
+      </p>
+      <button class="ds-button" data-dialog-open type="button">
+        Review settings
+      </button>
+      <dialog
+        aria-labelledby="vanilla-dialog-title"
+        class="ds-dialog"
+        data-dialog
+      >
+        <div class="ds-dialog__surface">
+          <h2 id="vanilla-dialog-title" tabindex="-1">Review settings</h2>
+          <p>Native dialog behavior provides modality and focus containment.</p>
+          <button
+            class="ds-button ds-button--secondary"
+            data-dialog-close
+            type="button"
+          >
+            Close
+          </button>
+        </div>
+      </dialog>
+      <p aria-live="polite" data-dialog-status></p>
+    </main>
+    <script type="module" src="/src/vanilla/dialog-demo.js"></script>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+# File: dependabot.yml
+# Purpose: Propose bounded weekly npm and GitHub Actions updates within the tested runtime/toolchain contract.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      react-runtime:
+        patterns: ["react", "react-dom", "@types/react", "@types/react-dom"]
+      storybook:
+        patterns: ["storybook", "@storybook/*"]
+      development-tooling:
+        dependency-type: development
+        exclude-patterns:
+          [
+            "storybook",
+            "@storybook/*",
+            "react",
+            "react-dom",
+            "@types/react",
+            "@types/react-dom",
+          ]
+    ignore:
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+    open-pull-requests-limit: 5
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      actions:
+        patterns: ["*"]
+    open-pull-requests-limit: 3

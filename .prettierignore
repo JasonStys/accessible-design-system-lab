@@ -1,0 +1,10 @@
+# File: .prettierignore
+# Purpose: Exclude generated artifacts and third-party dependencies from formatting checks.
+node_modules
+dist
+storybook-static
+coverage
+playwright-report
+test-results
+package-lock.json
+docs/code-index.md

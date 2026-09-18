@@ -1,0 +1,127 @@
+/**
+ * File: demo.css
+ * Purpose: Present the portfolio catalog without leaking demo-only layout into the package API.
+ * Major selectors: shell, hero, toolbar, grid, specimen, and evidence summary.
+ */
+body {
+  background:
+    radial-gradient(
+      circle at 15% -10%,
+      color-mix(in srgb, var(--ds-color-primary) 22%, transparent),
+      transparent 35rem
+    ),
+    var(--ds-color-canvas);
+  color: var(--ds-color-text);
+  font: var(--ds-font-size-md) / var(--ds-line-height) var(--ds-font-sans);
+  margin: 0;
+  min-block-size: 100vh;
+}
+
+a {
+  color: var(--ds-color-primary);
+  text-underline-offset: 0.2em;
+}
+
+.demo-shell {
+  inline-size: min(100% - 2rem, var(--ds-content-width));
+  margin-inline: auto;
+  padding-block: var(--ds-space-8) var(--ds-space-12);
+}
+
+.demo-hero {
+  display: grid;
+  gap: var(--ds-space-6);
+  grid-template-columns: minmax(0, 1.6fr) minmax(15rem, 0.7fr);
+  padding-block: var(--ds-space-12);
+}
+
+.demo-eyebrow {
+  color: var(--ds-color-primary);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.demo-title {
+  font-size: var(--ds-font-size-xl);
+  line-height: 0.95;
+  margin: var(--ds-space-3) 0;
+  max-inline-size: 12ch;
+}
+
+.demo-summary {
+  color: var(--ds-color-muted);
+  font-size: var(--ds-font-size-lg);
+  max-inline-size: 62ch;
+}
+
+.demo-evidence {
+  align-self: start;
+  background: var(--ds-color-surface-raised);
+  border: 0.0625rem solid var(--ds-color-border);
+  border-radius: var(--ds-radius-lg);
+  box-shadow: var(--ds-shadow-raised);
+  padding: var(--ds-space-6);
+}
+
+.demo-evidence strong {
+  display: block;
+  font-size: 2rem;
+}
+
+.demo-toolbar {
+  align-items: center;
+  background: var(--ds-color-surface);
+  border: 0.0625rem solid var(--ds-color-border);
+  border-radius: var(--ds-radius-md);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-3);
+  margin-block-end: var(--ds-space-8);
+  padding: var(--ds-space-4);
+}
+
+.demo-grid {
+  display: grid;
+  gap: var(--ds-space-6);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
+}
+
+.demo-specimen {
+  background: var(--ds-color-surface);
+  border: 0.0625rem solid var(--ds-color-border);
+  border-radius: var(--ds-radius-lg);
+  padding: var(--ds-space-6);
+}
+
+.demo-specimen h2 {
+  margin-block-start: 0;
+}
+
+.demo-stack {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-3);
+}
+
+.demo-full-width {
+  grid-column: 1 / -1;
+}
+
+.demo-code {
+  background: color-mix(
+    in srgb,
+    var(--ds-color-text) 8%,
+    var(--ds-color-surface)
+  );
+  border-radius: var(--ds-radius-sm);
+  font-family: var(--ds-font-mono);
+  padding: var(--ds-space-1) var(--ds-space-2);
+}
+
+@media (max-width: 48rem) {
+  .demo-hero {
+    grid-template-columns: 1fr;
+  }
+}

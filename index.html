@@ -1,0 +1,26 @@
+<!--
+  File: index.html
+  Purpose: Provide the semantic entry document for the React component catalog.
+  Major regions: skip link, application root, and no-script fallback.
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="An accessible design-system laboratory with tested React components and native web examples."
+    />
+    <title>Accessible Design System Lab</title>
+  </head>
+  <body>
+    <a class="ds-skip-link" href="#main-content">Skip to component catalog</a>
+    <div id="root"></div>
+    <noscript
+      >This catalog requires JavaScript; the vanilla example remains
+      available.</noscript
+    >
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

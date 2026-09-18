@@ -1,0 +1,129 @@
+# File: ci.yml
+# Purpose: Verify TypeScript, React, Storybook, package, browser, accessibility, bundle, and repository contracts.
+# Jobs: independent least-privilege checks run on pushes, pull requests, and manual dispatch.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Node ${{ matrix.node }} component verification
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [22, 24]
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Check formatting
+        run: npm run format:check
+      - name: Lint with zero warnings
+        run: npm run lint
+      - name: Check strict types
+        run: npm run typecheck
+      - name: Run component tests and coverage thresholds
+        run: npm run test
+      - name: Upload coverage evidence
+        if: always() && matrix.node == 24
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: component-coverage
+          path: coverage
+          if-no-files-found: warn
+
+  package:
+    name: Package, Storybook, and bundle verification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set up Node.js 24
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Build package, declarations, and demo site
+        run: npm run build
+      - name: Enforce compressed bundle budgets
+        run: npm run bundle:check
+      - name: Install packed artifact in a clean consumer
+        run: npm run package:smoke
+      - name: Build component documentation
+        run: npm run build:storybook
+      - name: Audit production dependency graph
+        run: npm audit --omit=dev --audit-level=high
+      - name: Upload package evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: package-and-storybook
+          path: |
+            dist
+            storybook-static
+            docs/reports/generated/bundle-budget.json
+          if-no-files-found: error
+
+  browser:
+    name: Desktop and mobile accessibility workflows
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set up Node.js 24
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Install Chromium and system dependencies
+        run: npx playwright install --with-deps chromium
+      - name: Run keyboard, axe, RTL, motion, and vanilla scenarios
+        run: npm run test:e2e
+      - name: Upload browser evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: browser-report
+          path: |
+            playwright-report
+            test-results
+          if-no-files-found: warn
+
+  repository:
+    name: Repository and documentation validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set up Node.js 24
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24"
+      - name: Validate documentation, links, headers, and content policy
+        run: node scripts/validate-repository.mjs
+      - name: Confirm generated code index is current
+        run: node scripts/generate-code-index.mjs --check
+      - name: Validate shell syntax
+        run: bash -n scripts/verify.sh

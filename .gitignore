@@ -1,0 +1,14 @@
+# File: .gitignore
+# Purpose: Keep generated, dependency, browser, and editor output out of version control.
+node_modules/
+dist/
+storybook-static/
+coverage/
+playwright-report/
+test-results/
+.npm-cache/
+*.tgz
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

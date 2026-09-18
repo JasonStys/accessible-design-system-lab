@@ -1,0 +1,21 @@
+{
+  "budgets": {
+    "css": 16000,
+    "javascript": 36000
+  },
+  "results": {
+    "css": {
+      "budget": 16000,
+      "gzipBytes": 2020,
+      "passed": true,
+      "rawBytes": 7142
+    },
+    "javascript": {
+      "budget": 36000,
+      "gzipBytes": 2487,
+      "passed": true,
+      "rawBytes": 7834
+    }
+  },
+  "schemaVersion": 1
+}
