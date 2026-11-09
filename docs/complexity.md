@@ -1,5 +1,12 @@
 # Complexity and performance
 
+Sortable DataTable: stable explicit-key sorting costs O(R log R) time and O(R)
+auxiliary memory for R incoming rows; identity validation is O(R+C). Paging renders
+O(P*C) cells for page size P and column count C, but sorting still sees all R rows.
+It is an in-memory component, not server pagination or virtualization. Primitive
+keys are supplied separately from rendered content; no DOM parsing or unsafe HTML
+is used to decide order.
+
 | Operation                      |       Time |      Space | Notes                                            |
 | ------------------------------ | ---------: | ---------: | ------------------------------------------------ |
 | Button/TextField/Dialog render |     `O(1)` |     `O(1)` | Fixed element count, excluding caller children   |

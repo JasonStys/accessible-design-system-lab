@@ -142,12 +142,32 @@ declaration and important-variable locations. Regenerate after source edits.
 - Line 45: `handleChange`
 - Line 52: `handleKeyDown`
 
+## `src/components/DataTable.test.tsx`
+
+- Line 13: `columns`
+- Line 18: `rows`
+- Line 37: `user`
+- Line 50: `sort`
+- Line 78: `user`
+- Line 152: `user`
+
 ## `src/components/DataTable.tsx`
 
-- Line 9: `DataTableColumn`
-- Line 14: `DataTableRow`
-- Line 19: `DataTableProps`
-- Line 26: `DataTable`
+- Line 8: `ReactNode`
+- Line 9: `SortValue`
+- Line 11: `DataTableColumn`
+- Line 17: `DataTableRow`
+- Line 23: `DataTableProps`
+- Line 33: `DataTable`
+- Line 46: `captionRef`
+- Line 60: `active`
+- Line 64: `ordered`
+- Line 69: `size`
+- Line 70: `pages`
+- Line 71: `page`
+- Line 72: `visible`
+- Line 73: `announcement`
+- Line 83: `goToPage`
 
 ## `src/components/Dialog.tsx`
 
@@ -219,6 +239,22 @@ declaration and important-variable locations. Regenerate after source edits.
 - Line 193: `onDismiss`
 - Line 227: `table`
 
+## `src/components/table-data.test.ts`
+
+- Line 12: `rows`
+- Line 21: `before`
+- Line 46: `rows`
+
+## `src/components/table-data.ts`
+
+- Line 8: `SortValue`
+- Line 9: `SortableRow`
+- Line 15: `comparison`
+- Line 24: `sortedRows`
+- Line 33: `a`
+- Line 34: `b`
+- Line 39: `order`
+
 ## `src/index.ts`
 
 - Line 3: `export`
@@ -249,8 +285,9 @@ declaration and important-variable locations. Regenerate after source edits.
 - Line 77: `ModalDialog`
 - Line 79: `KeyboardTabs`
 - Line 95: `NativeTable`
-- Line 109: `ToastStory`
-- Line 123: `Notifications`
+- Line 108: `SortableTable`
+- Line 139: `ToastStory`
+- Line 153: `Notifications`
 
 ## `src/test/setup.ts`
 
@@ -269,10 +306,12 @@ declaration and important-variable locations. Regenerate after source edits.
 
 ## `tests/e2e/design-system.spec.ts`
 
-- Line 27: `semantics`
-- Line 40: `results`
-- Line 54: `application`
-- Line 58: `transitionDuration`
+- Line 14: `table`
+- Line 17: `sort`
+- Line 68: `semantics`
+- Line 81: `results`
+- Line 95: `application`
+- Line 99: `transitionDuration`
 
 ## `vite.config.ts`
 

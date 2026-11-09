@@ -49,6 +49,12 @@
     "react": ">=19 <20",
     "react-dom": ">=19 <20"
   },
+  "overrides": {
+    "glob": "14.0.4",
+    "minimatch": "11.0.5",
+    "undici": "8.12.4",
+    "zod": "4.6.7"
+  },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",
     "@eslint/js": "10.0.1",

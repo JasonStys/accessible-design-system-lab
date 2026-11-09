@@ -11,6 +11,12 @@ The project avoids unsupported conformance claims. Automated tools catch only pa
 accessibility surface, so the exact automated criteria and remaining manual checks are published in
 [the accessibility contract](docs/accessibility.md).
 
+The catalog's interaction-reference table now demonstrates stable explicit-key
+sorting and pagination with native header buttons, `aria-sort`, live range
+announcements and deliberate keyboard focus. The reusable component also handles
+empty/loading/error states without exposing stale rows. See the [DataTable API](docs/api.md#datatable)
+and [observed validation](docs/reports/practical-workflows-20261109.md).
+
 ## What this demonstrates
 
 - TypeScript and React API design with strict types and explicit public exports.
@@ -25,15 +31,15 @@ accessibility surface, so the exact automated criteria and remaining manual chec
 
 ## Component summary
 
-| Component     | Major behavior                                              | Native foundation         |
-| ------------- | ----------------------------------------------------------- | ------------------------- |
-| `Button`      | Visual variants, busy/disabled state                        | `<button>`                |
-| `TextField`   | Label, description, error, stable IDs                       | `<label>` + `<input>`     |
-| `Dialog`      | Controlled modal state, initial focus, Escape, focus return | `<dialog>.showModal()`    |
-| `Tabs`        | Roving tab stop, arrows, Home/End, automatic activation     | `<button>` + tab roles    |
-| `Combobox`    | Filtering, active descendant, keyboard selection            | `<input>` + listbox roles |
-| `ToastRegion` | Polite announcements and explicit dismissal                 | live region + `<button>`  |
-| `DataTable`   | Caption, scoped headers, horizontal overflow focus          | `<table>`                 |
+| Component     | Major behavior                                                                     | Native foundation         |
+| ------------- | ---------------------------------------------------------------------------------- | ------------------------- |
+| `Button`      | Visual variants, busy/disabled state                                               | `<button>`                |
+| `TextField`   | Label, description, error, stable IDs                                              | `<label>` + `<input>`     |
+| `Dialog`      | Controlled modal state, initial focus, Escape, focus return                        | `<dialog>.showModal()`    |
+| `Tabs`        | Roving tab stop, arrows, Home/End, automatic activation                            | `<button>` + tab roles    |
+| `Combobox`    | Filtering, active descendant, keyboard selection                                   | `<input>` + listbox roles |
+| `ToastRegion` | Polite announcements and explicit dismissal                                        | live region + `<button>`  |
+| `DataTable`   | Stable explicit-key sorting, pagination/focus, data states, native caption/headers | `<table>`                 |
 
 ## Quick start
 

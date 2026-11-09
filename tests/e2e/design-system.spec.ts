@@ -7,6 +7,47 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
+test("sortable paginated table retains native semantics, announced ranges and keyboard focus", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const table = page.getByRole("table", {
+    name: "Keyboard contracts by component",
+  });
+  const sort = table.getByRole("button", {
+    name: "Sort by Component ascending",
+  });
+  await sort.focus();
+  await page.keyboard.press("Enter");
+  await expect(
+    table.getByRole("button", { name: "Sort by Component descending" }),
+  ).toBeFocused();
+  await expect(table.getByRole("columnheader").first()).toHaveAttribute(
+    "aria-sort",
+    "ascending",
+  );
+  await expect(table.locator("tbody tr").first()).toContainText("Combobox");
+  await page.getByRole("button", { name: "Next page" }).click();
+  await expect(table.locator("caption")).toBeFocused();
+  await expect(table.locator("tbody tr")).toHaveCount(1);
+  await expect(table.locator("tbody")).toContainText("Tabs");
+  await expect(
+    page.getByRole("status").filter({ hasText: "Rows 3–3 of 3" }),
+  ).toBeVisible();
+  await expect(page.getByRole("button", { name: "Next page" })).toBeDisabled();
+  expect(
+    (
+      await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+        .analyze()
+    ).violations,
+  ).toEqual([]);
+  await page.getByRole("button", { name: "Direction: LTR" }).click();
+  await page.getByRole("button", { name: "Previous page" }).click();
+  await expect(table.locator("caption")).toBeFocused();
+  await expect(table.locator("tbody tr")).toHaveCount(2);
+});
+
 test("catalog supports keyboard navigation and a native modal lifecycle", async ({
   page,
 }) => {

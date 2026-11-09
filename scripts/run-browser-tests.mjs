@@ -8,7 +8,7 @@ import { spawn } from "node:child_process";
 import { build, preview } from "vite";
 
 const host = "127.0.0.1";
-const port = 4173;
+const port = Number(process.env.DESIGN_SYSTEM_TEST_PORT ?? 4173);
 
 /** Run the Playwright CLI with inherited output and return its numeric exit code. */
 function runPlaywright() {

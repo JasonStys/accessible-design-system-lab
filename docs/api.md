@@ -41,3 +41,40 @@ pause-control problems.
 
 Accepts a visible caption, stable columns, and rows keyed by ID. Cells are read from each row's
 `values` record in column order. Consumer code owns domain formatting and row-header decisions.
+
+Columns may declare `sortable: true`; each row then supplies the corresponding
+`sortValues` primitive key independently of its rendered React cell. This prevents
+lexical sorting of formatted numbers such as “12 milliseconds” before “3 milliseconds”.
+Numbers and deterministic code-unit strings are supported; missing/null/nonfinite
+keys sort last in both directions. Equal keys retain incoming row order. Ascending
+mixed types put numbers before strings; descending reverses that type order.
+Consumers own locale-specific collation/ranks and meaningful domain keys.
+
+`pageSize` is an optional positive safe integer. Paging announces the shown range,
+clamps a requested page when rows shrink and focuses the persistent caption after
+page navigation. Sorting resets to page1 and keeps focus on the header button.
+`aria-sort` appears only on the effective sorted column; removing that column
+restores incoming row order. Requested-page intent may become available again if
+rows subsequently grow. Unique row IDs/column keys and at least one column are
+required; invalid component configuration throws a developer contract error.
+
+`state="loading"` and `state="error"` suppress stale rows and disable sorting/paging.
+An optional plain-text `message` customizes the loading/error/empty announcement;
+errors use an alert, other results use a polite status. The default is `ready`.
+Data fetching/filtering/retry and authentication remain consumer responsibilities.
+
+```tsx
+<DataTable
+  caption="Synthetic service checks"
+  columns={[{ key: "latency", label: "Latency", sortable: true }]}
+  rows={[
+    { id: "alpha", values: { latency: "12 ms" }, sortValues: { latency: 12 } },
+    {
+      id: "beta",
+      values: { latency: "Unknown" },
+      sortValues: { latency: null },
+    },
+  ]}
+  pageSize={10}
+/>
+```

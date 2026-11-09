@@ -217,11 +217,15 @@ export function App() {
             <DataTable
               caption="Keyboard contracts by component"
               columns={[
-                { key: "component", label: "Component" },
+                { key: "component", label: "Component", sortable: true },
                 { key: "keys", label: "Keys" },
                 { key: "behavior", label: "Behavior" },
               ]}
-              rows={interactionRows}
+              rows={interactionRows.map((row) => ({
+                ...row,
+                sortValues: { component: row.values.component },
+              }))}
+              pageSize={2}
             />
           </section>
 

@@ -14,6 +14,10 @@
 
 ## Source
 
+- `src/components/table-data.ts` — immutable stable primitive-key sorting, missing/nonfinite handling and tie rules.
+- `src/components/table-data.test.ts` — independent expected numeric/string/missing/mixed order and immutability oracles.
+- `src/components/DataTable.test.tsx` — keyboard sort, pagination focus, changing schemas/data, empty/loading/error and invalid configuration journeys.
+
 - `src/index.ts` — explicit package exports and reusable styles.
 - `src/App.tsx`, `src/main.tsx` — integrated portfolio catalog and bootstrap.
 - `src/components/` — seven public components plus focused tests.
