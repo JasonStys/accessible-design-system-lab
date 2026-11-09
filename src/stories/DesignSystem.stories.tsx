@@ -105,6 +105,36 @@ export const NativeTable: Story = {
   ),
 };
 
+export const SortableTable: Story = {
+  render: () => (
+    <DataTable
+      caption="Synthetic service checks"
+      pageSize={2}
+      columns={[
+        { key: "name", label: "Service", sortable: true },
+        { key: "latency", label: "Latency ms", sortable: true },
+      ]}
+      rows={[
+        {
+          id: "alpha",
+          values: { name: "Alpha", latency: "12 ms" },
+          sortValues: { name: "Alpha", latency: 12 },
+        },
+        {
+          id: "beta",
+          values: { name: "Beta", latency: "Unknown" },
+          sortValues: { name: "Beta", latency: null },
+        },
+        {
+          id: "gamma",
+          values: { name: "Gamma", latency: "8 ms" },
+          sortValues: { name: "Gamma", latency: 8 },
+        },
+      ]}
+    />
+  ),
+};
+
 /** Demonstrate dismissible messages without timing-dependent auto-removal. */
 function ToastStory() {
   const [toasts, setToasts] = useState<ToastMessage[]>([

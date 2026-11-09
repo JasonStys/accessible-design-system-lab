@@ -19,7 +19,7 @@ export default defineConfig({
   reporter: [["list"], ["html", { open: "never" }]],
   testDir: "tests/e2e",
   use: {
-    baseURL: "http://127.0.0.1:4173",
+    baseURL: `http://127.0.0.1:${String(Number(process.env.DESIGN_SYSTEM_TEST_PORT ?? 4173))}`,
     trace: "retain-on-failure",
   },
 });

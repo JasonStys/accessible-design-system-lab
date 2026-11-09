@@ -12,9 +12,9 @@
     },
     "javascript": {
       "budget": 36000,
-      "gzipBytes": 2487,
+      "gzipBytes": 3638,
       "passed": true,
-      "rawBytes": 7834
+      "rawBytes": 11387
     }
   },
   "schemaVersion": 1
