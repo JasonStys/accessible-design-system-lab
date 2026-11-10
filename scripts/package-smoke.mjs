@@ -1,14 +1,20 @@
 /**
  * File: package-smoke.mjs
- * Purpose: Pack the built library, install it into an isolated consumer, and verify public exports.
+ * Author: Jason Stys
+ * Purpose: Install the final TGZ in a private consumer, build its public imports and exercise real React DOM behavior.
  * Symbols and line locations: see docs/code-index.md.
- * Important variables: expectedExports is the supported runtime package contract.
+ * Important variables: expectedExports, reviewedLock and consumer; source aliases and existing servers are never used.
  */
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import assert from "node:assert/strict";
+import { mkdtemp, readFile, realpath, rm, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { tmpdir } from "node:os";
-import { dirname, join, resolve } from "node:path";
+import { basename, dirname, join, resolve, sep } from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { build, preview } from "vite";
+import { chromium } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const expectedExports = [
@@ -20,71 +26,333 @@ const expectedExports = [
   "TextField",
   "ToastRegion",
 ];
-const npmEnvironment = {
-  ...process.env,
-  npm_config_cache: join(repositoryRoot, ".npm-cache"),
-};
+const reviewedLock = JSON.parse(
+  await readFile(join(repositoryRoot, "package-lock.json"), "utf8"),
+);
+const npmEnvironment = Object.fromEntries(
+  Object.entries(process.env).filter(
+    ([name, value]) =>
+      typeof value === "string" &&
+      !/(?:TOKEN|PASSWORD|SECRET|CREDENTIAL|AUTH|COOKIE)|^NODE_OPTIONS$|^NODE_PATH$/iu.test(
+        name,
+      ),
+  ),
+);
+npmEnvironment.npm_config_cache =
+  process.env.npm_config_cache ?? join(repositoryRoot, ".npm-cache");
 
-/** Run a child command with captured output and a precise failure message. */
-function run(command, args, cwd) {
-  const npmCli = command === "npm" ? process.env.npm_execpath : undefined;
-  const executable = npmCli ? process.execPath : command;
-  const childArgs = npmCli ? [npmCli, ...args] : args;
-  const result = spawnSync(executable, childArgs, {
+/** Invoke the existing npm JS CLI with scripts disabled, deadlines and bounded public diagnostics. */
+function runNpm(args, cwd) {
+  const cli = process.env.npm_execpath;
+  if (!cli || !/npm-cli\.js$/u.test(cli.replaceAll("\\", "/")))
+    throw new Error(
+      "Run package smoke through npm run package:smoke so the exact npm CLI is known.",
+    );
+  const result = spawnSync(process.execPath, [cli, ...args], {
     cwd,
     encoding: "utf8",
     env: npmEnvironment,
+    timeout: 120_000,
+    maxBuffer: 2 * 1024 * 1024,
+    windowsHide: true,
   });
   if (result.status !== 0)
     throw new Error(
-      `${command} ${args.join(" ")} failed:\n${result.error ?? ""}\n${result.stdout ?? ""}\n${result.stderr ?? ""}`,
+      `Consumer npm command failed: ${result.error ?? ""}\n${result.stdout ?? ""}\n${result.stderr ?? ""}`,
     );
   return result.stdout.trim();
 }
 
-/** Verify package contents and runtime exports from a clean consumer boundary. */
-function main() {
-  const consumer = mkdtempSync(
-    join(tmpdir(), "accessible-design-system-consumer-"),
+/** Write an independent consumer that imports only the installed package and declared public stylesheet. */
+async function consumerFiles(consumer, archivePath) {
+  const peers = Object.fromEntries(
+    ["react", "react-dom", "scheduler"].map((name) => {
+      const entry = reviewedLock.packages[`node_modules/${name}`];
+      assert.ok(
+        entry?.version && entry.integrity,
+        `Reviewed ${name} peer identity missing`,
+      );
+      return [name, entry.version];
+    }),
   );
+  await writeFile(
+    join(consumer, "package.json"),
+    JSON.stringify({
+      private: true,
+      type: "module",
+      dependencies: {
+        ...peers,
+        "accessible-design-system-lab": `file:${archivePath.replaceAll("\\", "/")}`,
+      },
+    }),
+  );
+  await writeFile(join(consumer, "empty-user.npmrc"), "");
+  await writeFile(join(consumer, "empty-global.npmrc"), "");
+  runNpm(
+    [
+      "install",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund",
+      "--registry=https://registry.npmjs.org/",
+      `--userconfig=${join(consumer, "empty-user.npmrc")}`,
+      `--globalconfig=${join(consumer, "empty-global.npmrc")}`,
+    ],
+    consumer,
+  );
+  const installed = JSON.parse(
+    await readFile(join(consumer, "package-lock.json"), "utf8"),
+  );
+  for (const name of Object.keys(peers)) {
+    const actual = installed.packages[`node_modules/${name}`];
+    const reviewed = reviewedLock.packages[`node_modules/${name}`];
+    assert.equal(actual.version, reviewed.version, `${name} version drift`);
+    assert.equal(
+      actual.integrity,
+      reviewed.integrity,
+      `${name} archive integrity drift`,
+    );
+  }
+  const installedRoot = await realpath(
+    join(consumer, "node_modules/accessible-design-system-lab"),
+  );
+  assert.ok(
+    installedRoot.startsWith(consumer + sep) &&
+      !installedRoot.startsWith(repositoryRoot + sep),
+  );
+  const manifest = JSON.parse(
+    await readFile(join(installedRoot, "package.json"), "utf8"),
+  );
+  assert.equal(manifest.name, "accessible-design-system-lab");
+  await writeFile(
+    join(consumer, "index.html"),
+    '<!doctype html><html lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Installed package consumer</title><div id="root"></div><script type="module" src="/consumer.js"></script></html>',
+  );
+  await writeFile(
+    join(consumer, "consumer.js"),
+    `
+import React, { useState } from 'react';
+import { createRoot } from 'react-dom/client';
+import * as Public from 'accessible-design-system-lab';
+import 'accessible-design-system-lab/styles.css';
+const exported = Object.keys(Public).sort();
+if (${JSON.stringify(expectedExports)}.some(name => !Public[name] || !['function','object'].includes(typeof Public[name]))) throw new Error('Runtime export missing');
+window.installedExports = exported;
+const rows = [
+ {id:'bravo', values:{product:'Bravo',units:'12 units'},sortValues:{units:12}},
+ {id:'alpha', values:{product:'Alpha',units:'2 units'},sortValues:{units:2}},
+ {id:'unknown',values:{product:'<img src=x onerror="injected=true">',units:'Unknown'},sortValues:{units:null}},
+ {id:'twin',values:{product:'Alpha twin',units:'2 units'},sortValues:{units:2}},
+];
+function App(){
+ const [state,setState]=useState('ready'); const [empty,setEmpty]=useState(false);
+ return React.createElement('main',null,
+  React.createElement('h1',null,'Installed package consumer'),
+  React.createElement('div',{role:'group','aria-label':'Fixture scenarios'},
+   ...['ready','loading','error'].map(value=>React.createElement(Public.Button,{key:value,onClick:()=>{setState(value);setEmpty(false)}},value)),
+   React.createElement(Public.Button,{onClick:()=>{setState('ready');setEmpty(true)}},'empty')),
+  React.createElement(Public.DataTable,{caption:'Installed stock',columns:[{key:'product',label:'Product'},{key:'units',label:'Units',sortable:true}],rows:empty?[]:rows,pageSize:2,state}));
+}
+createRoot(document.getElementById('root')).render(React.createElement(App));
+`,
+  );
+  return manifest.version;
+}
+
+/** Exercise actual installed-package DOM, numeric ordering, pagination focus and state transitions. */
+async function exercise(page) {
+  const table = page.getByRole("table", {
+    name: "Installed stock",
+    exact: true,
+  });
+  await table.waitFor();
+  assert.deepEqual(
+    await page.evaluate(() => globalThis.installedExports),
+    [...expectedExports].sort(),
+  );
+  assert.deepEqual(
+    await table.locator("tbody tr td:first-child").allTextContents(),
+    ["Bravo", "Alpha"],
+  );
+  const sort = page.getByRole("button", {
+    name: "Sort by Units ascending",
+    exact: true,
+  });
+  await sort.focus();
+  await sort.press("Enter");
+  await page.waitForFunction(
+    () =>
+      globalThis.document.querySelector('th[aria-sort="ascending"]') !== null,
+  );
+  assert.deepEqual(
+    await table.locator("tbody tr td:first-child").allTextContents(),
+    ["Alpha", "Alpha twin"],
+  );
+  await page.getByRole("button", { name: "Next page", exact: true }).click();
+  await page.waitForFunction(
+    () => globalThis.document.activeElement?.tagName === "CAPTION",
+  );
+  assert.deepEqual(
+    await table.locator("tbody tr td:first-child").allTextContents(),
+    ["Bravo", '<img src=x onerror="injected=true">'],
+  );
+  assert.equal(
+    await page
+      .getByRole("button", { name: "Next page", exact: true })
+      .isDisabled(),
+    true,
+  );
+  assert.equal(await page.locator("img").count(), 0);
+  await page
+    .getByRole("button", { name: "Previous page", exact: true })
+    .click();
+  await page.waitForFunction(
+    () => globalThis.document.activeElement?.tagName === "CAPTION",
+  );
+  await page
+    .getByRole("button", { name: "Sort by Units descending", exact: true })
+    .click();
+  await page.waitForFunction(
+    () =>
+      globalThis.document.querySelector('th[aria-sort="descending"]') !== null,
+  );
+  assert.deepEqual(
+    await table.locator("tbody tr td:first-child").allTextContents(),
+    ["Bravo", "Alpha"],
+  );
+  assert.equal(
+    await table.evaluate(
+      (element) => globalThis.getComputedStyle(element).borderCollapse,
+    ),
+    "collapse",
+  );
+  assert.deepEqual((await new AxeBuilder({ page }).analyze()).violations, []);
+  await page.getByRole("button", { name: "loading", exact: true }).click();
+  await page
+    .getByRole("status")
+    .filter({ hasText: "Loading table data." })
+    .waitFor();
+  assert.equal(
+    await page.getByRole("button", { name: /Sort by Units/u }).isDisabled(),
+    true,
+  );
+  await page.getByRole("button", { name: "error", exact: true }).click();
+  await page
+    .getByRole("alert")
+    .filter({ hasText: "Table data could not be loaded." })
+    .waitFor();
+  await page.getByRole("button", { name: "empty", exact: true }).click();
+  await page
+    .getByRole("status")
+    .filter({ hasText: "No matching rows." })
+    .waitFor();
+  assert.equal(
+    await page
+      .getByRole("button", { name: "Next page", exact: true })
+      .isDisabled(),
+    true,
+  );
+}
+
+/** Pack/install/build only within a verified owned directory, then stop only owned browser/listener resources. */
+async function main() {
+  const consumer = await realpath(
+    await mkdtemp(join(tmpdir(), "accessible-design-system-consumer-")),
+  );
+  let server;
+  let browser;
   try {
-    const packOutput = JSON.parse(
-      run("npm", ["pack", "--json", "--ignore-scripts"], repositoryRoot),
+    const pack = JSON.parse(
+      runNpm(
+        ["pack", "--json", "--ignore-scripts", "--pack-destination", consumer],
+        repositoryRoot,
+      ),
     );
-    const filename = packOutput[0]?.filename;
-    if (!filename)
-      throw new Error("npm pack did not return a package filename");
-    const archivePath = join(repositoryRoot, filename);
-    writeFileSync(
-      join(consumer, "package.json"),
-      '{"private":true,"type":"module"}\n',
-      "utf8",
+    const filename = pack[0]?.filename;
+    assert.ok(
+      typeof filename === "string" &&
+        basename(filename) === filename &&
+        /^[a-z0-9._-]+\.tgz$/u.test(filename),
     );
-    run(
-      "npm",
-      ["install", "--ignore-scripts", "--no-audit", "--no-fund", archivePath],
-      consumer,
-    );
-    const modulePath = join(
-      consumer,
-      "node_modules",
-      "accessible-design-system-lab",
-      "dist",
-      "package",
-      "accessible-design-system.js",
-    );
-    const source = readFileSync(modulePath, "utf8");
-    for (const name of expectedExports) {
-      if (!source.includes(name))
-        throw new Error(`Packed module does not expose ${name}`);
-    }
+    const archivePath = join(consumer, filename);
+    const archiveHash = createHash("sha256")
+      .update(await readFile(archivePath))
+      .digest("hex");
+    const version = await consumerFiles(consumer, archivePath);
+    await build({
+      root: consumer,
+      configFile: false,
+      build: { outDir: "site", emptyOutDir: true },
+      logLevel: "warn",
+    });
+    server = await preview({
+      root: consumer,
+      configFile: false,
+      build: { outDir: "site" },
+      preview: { host: "127.0.0.1", port: 0, strictPort: true },
+      logLevel: "warn",
+    });
+    const address = server.httpServer.address();
+    assert.ok(address && typeof address !== "string");
+    const origin = `http://127.0.0.1:${address.port}`;
+    const outside = [];
+    const pageErrors = [];
+    browser = await chromium.launch({ headless: true, env: npmEnvironment });
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    page.setDefaultTimeout(5_000);
+    page.setDefaultNavigationTimeout(10_000);
+    page.on("pageerror", (error) => pageErrors.push(error.message));
+    await page.route("**/*", (route) => {
+      if (new URL(route.request().url()).origin !== origin) {
+        outside.push(route.request().url());
+        return route.abort();
+      }
+      return route.continue();
+    });
+    await page.goto(origin);
+    await exercise(page);
+    assert.deepEqual(outside, []);
+    assert.deepEqual(pageErrors, []);
     console.log(
-      `Package smoke test passed for ${expectedExports.length} public components.`,
+      JSON.stringify({
+        consumer:
+          "actual installed TGZ public exports and CSS; genuine Vite build/Chromium React DOM; no source aliases",
+        version,
+        archiveSha256: archiveHash,
+        runtimeExports: expectedExports.length,
+        checks: [
+          "mount",
+          "numeric stable sort",
+          "page bounds",
+          "caption focus",
+          "literal text",
+          "installed stylesheet",
+          "loading",
+          "error",
+          "empty",
+          "axe0",
+          "externalRequests0",
+        ],
+      }),
     );
-    rmSync(archivePath, { force: true });
   } finally {
-    rmSync(consumer, { force: true, recursive: true });
+    if (browser) await browser.close();
+    if (server) await server.close();
+    assert.ok(
+      consumer.startsWith(resolve(tmpdir()) + sep) ||
+        consumer.startsWith((await realpath(tmpdir())) + sep),
+    );
+    assert.ok(
+      basename(consumer).startsWith("accessible-design-system-consumer-"),
+    );
+    await rm(consumer, {
+      force: true,
+      recursive: true,
+      maxRetries: 5,
+      retryDelay: 100,
+    });
   }
 }
 
-main();
+await main();
