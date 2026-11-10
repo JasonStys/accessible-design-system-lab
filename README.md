@@ -78,22 +78,26 @@ export function ProfileForm() {
 }
 ```
 
-The package is built and packed in CI but is not automatically published. This keeps releases
-intentional and prevents the portfolio repository from implying support commitments it does not
-make.
+The package is built and packed in CI but is not automatically published. Its acceptance installs
+the final archive outside the repository and mounts the public DataTable in a real independent
+React consumer, checking keyboard sorting, pagination/focus, data states, installed CSS and axe.
+See [installed-package evidence](docs/reports/installed-consumer-2026-11-09.md).
+
+Publication remains intentional; local/CI package evidence does not imply a published registry release or additional support commitments.
 
 ## Verification
 
 ```bash
-npm run verify
 npx playwright install chromium
+npm run verify
 npm run test:e2e
 ```
 
 `npm run verify` performs formatting, linting, strict type checking, coverage tests, application and
-library builds, gzip budget enforcement, clean-consumer package installation, Storybook build,
-generated code-index freshness, and documentation/repository validation. Playwright is separate
-because browser installation is an explicit environment step.
+library builds, gzip budget enforcement, actual installed-TGZ React/browser acceptance, Storybook
+build, generated code-index freshness, and documentation/repository validation. Install Chromium
+first: the package consumer uses a fresh browser context and genuine Vite build. `test:e2e` separately
+checks the integrated desktop/mobile catalog.
 
 See [testing strategy](docs/testing.md), [validation evidence](docs/reports/validation.md), and
 [manual screen-reader checklist](docs/reports/manual-screen-reader-checklist.md).

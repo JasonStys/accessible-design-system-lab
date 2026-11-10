@@ -67,7 +67,9 @@ jobs:
         run: npm run build
       - name: Enforce compressed bundle budgets
         run: npm run bundle:check
-      - name: Install packed artifact in a clean consumer
+      - name: Install browser for actual installed-package acceptance
+        run: npx playwright install --with-deps chromium
+      - name: Install packed artifact and exercise actual consumer React workflows
         run: npm run package:smoke
       - name: Build component documentation
         run: npm run build:storybook

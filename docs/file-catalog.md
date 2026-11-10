@@ -33,7 +33,7 @@
 - `tests/e2e/design-system.spec.ts` — keyboard, axe, responsive, RTL, motion, and vanilla scenarios.
 - `scripts/clean.mjs` — allowlisted generated-output cleanup.
 - `scripts/check-bundle.mjs` — gzip budget and JSON evidence.
-- `scripts/package-smoke.mjs` — packed clean-consumer verification.
+- `scripts/package-smoke.mjs` — private final-TGZ installation, exact reviewed peer integrity, real public-import Vite/React/browser acceptance, and owned cleanup.
 - `scripts/generate-code-index.mjs` — declaration line index.
 - `scripts/validate-repository.mjs` — documentation, link, header, and content policy.
 - `scripts/verify.sh` — Unix verification entry.

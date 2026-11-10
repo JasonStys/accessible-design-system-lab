@@ -63,22 +63,43 @@ declaration and important-variable locations. Regenerate after source edits.
 
 ## `scripts/package-smoke.mjs`
 
-- Line 13: `repositoryRoot`
-- Line 14: `expectedExports`
-- Line 23: `npmEnvironment`
-- Line 29: `run`
-- Line 30: `npmCli`
-- Line 31: `executable`
-- Line 32: `childArgs`
-- Line 33: `result`
-- Line 46: `main`
-- Line 47: `consumer`
-- Line 51: `packOutput`
-- Line 54: `filename`
-- Line 57: `archivePath`
-- Line 68: `modulePath`
-- Line 76: `source`
-- Line 77: `name`
+- Line 19: `repositoryRoot`
+- Line 20: `expectedExports`
+- Line 29: `reviewedLock`
+- Line 32: `npmEnvironment`
+- Line 45: `runNpm`
+- Line 46: `cli`
+- Line 51: `result`
+- Line 67: `consumerFiles`
+- Line 68: `peers`
+- Line 70: `entry`
+- Line 103: `installed`
+- Line 106: `name`
+- Line 107: `actual`
+- Line 108: `reviewed`
+- Line 116: `installedRoot`
+- Line 123: `manifest`
+- Line 138: `exported`
+- Line 141: `rows`
+- Line 147: `App`
+- Line 163: `exercise`
+- Line 164: `table`
+- Line 177: `sort`
+- Line 258: `main`
+- Line 259: `consumer`
+- Line 262: `server`
+- Line 263: `browser`
+- Line 265: `pack`
+- Line 271: `filename`
+- Line 277: `archivePath`
+- Line 278: `archiveHash`
+- Line 281: `version`
+- Line 295: `address`
+- Line 297: `origin`
+- Line 298: `outside`
+- Line 299: `pageErrors`
+- Line 301: `context`
+- Line 302: `page`
 
 ## `scripts/run-browser-tests.mjs`
 
