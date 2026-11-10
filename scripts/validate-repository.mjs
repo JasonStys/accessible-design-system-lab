@@ -7,6 +7,7 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, extname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { publicationText } from "./publication-text.mjs";
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const requiredFiles = [
@@ -89,7 +90,7 @@ function main() {
   }
   for (const path of walk(repositoryRoot)) {
     const repositoryPath = relative(repositoryRoot, path).replaceAll("\\", "/");
-    const content = readFileSync(path, "utf8");
+    const content = publicationText(path, repositoryPath);
     if (extname(path) === ".md") {
       for (const target of brokenMarkdownLinks(path))
         failures.push(

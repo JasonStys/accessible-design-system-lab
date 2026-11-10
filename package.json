@@ -36,7 +36,7 @@
     "format:check": "prettier --check .",
     "lint": "eslint . --max-warnings 0",
     "package:smoke": "node scripts/package-smoke.mjs",
-    "repository:check": "node scripts/validate-repository.mjs",
+    "repository:check": "node --test scripts/publication-text.test.mjs && node scripts/validate-repository.mjs",
     "storybook": "storybook dev -p 6006 --no-open",
     "symbols": "node scripts/generate-code-index.mjs",
     "symbols:check": "node scripts/generate-code-index.mjs --check",

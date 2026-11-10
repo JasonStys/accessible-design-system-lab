@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "project": "accessible-design-system-lab",
+  "author": "Jason Stys",
+  "editionDate": "2026-11-09",
+  "sourceBaseline": "bd689a5a8b119ed629905f65d90d097ae16acd0e",
+  "sourceUrl": "https://github.com/JasonStys/accessible-design-system-lab/tree/bd689a5a8b119ed629905f65d90d097ae16acd0e",
+  "functionalEvidenceBaseline": "bd689a5a8b119ed629905f65d90d097ae16acd0e",
+  "evidenceObservedAt": "2026-11-10T05:25:40.628667+00:00",
+  "workflowEvidence": [
+    {
+      "conclusion": "success",
+      "databaseId": 42749658810,
+      "event": "push",
+      "headSha": "bd689a5a8b119ed629905f65d90d097ae16acd0e",
+      "name": "CodeQL",
+      "status": "completed",
+      "url": "https://github.com/JasonStys/accessible-design-system-lab/actions/runs/42749658810"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 42749658831,
+      "event": "push",
+      "headSha": "bd689a5a8b119ed629905f65d90d097ae16acd0e",
+      "name": "CI",
+      "status": "completed",
+      "url": "https://github.com/JasonStys/accessible-design-system-lab/actions/runs/42749658831"
+    }
+  ],
+  "summary": "Use accessible table sorting, paging, stable missing-value ordering and focus handling. Final TGZ acceptance now installs the actual public package into an external React/Vite consumer and exercises shipped behavior, CSS and accessibility in Chromium.",
+  "rationale": "Proves that the packaged public exports work in a genuine separate consumer instead of passing because export names appear in JavaScript text.",
+  "limitations": [
+    "An installable component library and catalog, without automatic npm publication or a native desktop installer.",
+    "Synthetic component/browser checks and zero automated axe findings do not certify accessibility or replace manual assistive-technology testing.",
+    "Archive integrity and locked peers identify tested bytes, not independently authenticated publishers or OS code signatures."
+  ],
+  "documents": [
+    {
+      "filename": "project-guide.docx",
+      "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "bytes": 45574,
+      "sha256": "c2c3dfc033caf96971d9a189daa179266447a1929af4ec530e6df436f501a388",
+      "sourceBaseline": "bd689a5a8b119ed629905f65d90d097ae16acd0e",
+      "visualReview": {
+        "approved": true,
+        "method": "Every rendered page individually viewed at readable original resolution",
+        "pageCount": 6,
+        "renderedPageSha256": {
+          "page-1.png": "fa61c8f456ee6dfc69bd68e2881c74c655a2eb46e154d1bd3cafc4bac5ce4e61",
+          "page-2.png": "10059a63bd6bb23a243de1a67029349e053b23c30e6523fdc2bc58074614144e",
+          "page-3.png": "da6794098b648b9eaf048db1b04a67749e877cb8323df481c2bfed7bd307d5ba",
+          "page-4.png": "7df45bd41794fbdc86e32dde3e72be6348ef16263e1c6804cf22e0bb506ae21b",
+          "page-5.png": "fc1de8d1f517397bcbdf02f489e01a242fe458b19697014223378450af6e93cf",
+          "page-6.png": "ac733edeb0cfb77ffb5131c6a34a1e6234ec5af57841ad5b283374d8f0aba99a"
+        }
+      }
+    }
+  ],
+  "scope": "Reviewed documentation editions of the cited source. Checksums identify bytes, not authorship. Historical measurements retain their own dates; integration CI must be checked separately."
+}
