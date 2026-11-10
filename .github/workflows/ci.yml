@@ -123,8 +123,8 @@ jobs:
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: "24"
-      - name: Validate documentation, links, headers, and content policy
-        run: node scripts/validate-repository.mjs
+      - name: Test publication boundaries and validate repository content
+        run: npm run repository:check
       - name: Confirm generated code index is current
         run: node scripts/generate-code-index.mjs --check
       - name: Validate shell syntax

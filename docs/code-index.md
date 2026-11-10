@@ -101,6 +101,90 @@ declaration and important-variable locations. Regenerate after source edits.
 - Line 301: `context`
 - Line 302: `page`
 
+## `scripts/publication-text.mjs`
+
+- Line 10: `maxBytes`
+- Line 11: `maxXmlBytes`
+- Line 12: `utf8`
+- Line 15: `requireValue`
+- Line 20: `boundedBytes`
+- Line 21: `descriptor`
+- Line 26: `status`
+- Line 32: `buffer`
+- Line 33: `count`
+- Line 35: `received`
+- Line 53: `crc32`
+- Line 54: `value`
+- Line 55: `byte`
+- Line 57: `bit`
+- Line 64: `wordText`
+- Line 65: `end`
+- Line 67: `offset`
+- Line 80: `count`
+- Line 81: `cursor`
+- Line 82: `directoryEnd`
+- Line 93: `names`
+- Line 94: `ranges`
+- Line 95: `text`
+- Line 96: `expanded`
+- Line 97: `xmlBytes`
+- Line 98: `index`
+- Line 103: `flags`
+- Line 104: `method`
+- Line 105: `expectedCrc`
+- Line 106: `compressed`
+- Line 107: `size`
+- Line 108: `nameLength`
+- Line 109: `next`
+- Line 119: `nameBytes`
+- Line 120: `name`
+- Line 141: `local`
+- Line 147: `localNameEnd`
+- Line 148: `start`
+- Line 149: `finish`
+- Line 166: `encoded`
+- Line 167: `payload`
+- Line 192: `publicationText`
+- Line 193: `bytes`
+
+## `scripts/publication-text.test.mjs`
+
+- Line 18: `fixture`
+- Line 19: `offset`
+- Line 20: `local`
+- Line 21: `central`
+- Line 23: `label`
+- Line 24: `payload`
+- Line 25: `encoded`
+- Line 26: `crc`
+- Line 27: `byte`
+- Line 29: `bit`
+- Line 33: `header`
+- Line 41: `row`
+- Line 52: `directory`
+- Line 53: `end`
+- Line 63: `withBytes`
+- Line 64: `folder`
+- Line 66: `path`
+- Line 74: `base`
+- Line 84: `root`
+- Line 85: `text`
+- Line 95: `text`
+- Line 111: `folder`
+- Line 123: `folder`
+- Line 125: `path`
+- Line 126: `created`
+- Line 131: `source`
+- Line 132: `result`
+- Line 146: `text`
+- Line 153: `name`
+- Line 154: `bytes`
+- Line 155: `local`
+- Line 156: `central`
+- Line 167: `bytes`
+- Line 168: `central`
+- Line 267: `bytes`
+
 ## `scripts/run-browser-tests.mjs`
 
 - Line 10: `host`
@@ -111,26 +195,26 @@ declaration and important-variable locations. Regenerate after source edits.
 
 ## `scripts/validate-repository.mjs`
 
-- Line 11: `repositoryRoot`
-- Line 12: `requiredFiles`
-- Line 33: `headerExtensions`
-- Line 44: `excludedDirectories`
-- Line 54: `prohibitedPatterns`
-- Line 63: `walk`
-- Line 65: `path`
-- Line 73: `brokenMarkdownLinks`
-- Line 74: `markdown`
-- Line 76: `target`
-- Line 78: `localTarget`
-- Line 84: `main`
-- Line 85: `failures`
-- Line 86: `requiredFile`
-- Line 90: `path`
-- Line 91: `repositoryPath`
-- Line 92: `content`
-- Line 94: `target`
-- Line 100: `firstLines`
-- Line 104: `prohibited`
+- Line 12: `repositoryRoot`
+- Line 13: `requiredFiles`
+- Line 34: `headerExtensions`
+- Line 45: `excludedDirectories`
+- Line 55: `prohibitedPatterns`
+- Line 64: `walk`
+- Line 66: `path`
+- Line 74: `brokenMarkdownLinks`
+- Line 75: `markdown`
+- Line 77: `target`
+- Line 79: `localTarget`
+- Line 85: `main`
+- Line 86: `failures`
+- Line 87: `requiredFile`
+- Line 91: `path`
+- Line 92: `repositoryPath`
+- Line 93: `content`
+- Line 95: `target`
+- Line 101: `firstLines`
+- Line 105: `prohibited`
 
 ## `src/App.tsx`
 

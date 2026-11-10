@@ -44,3 +44,14 @@
 
 `docs/` contains architecture, API, accessibility, tokens, complexity, testing, operations, research,
 an ADR, generated code locations, and evidence reports. README links to each reader-oriented entry.
+
+## Reviewed documentation editions
+
+| File                                               | Purpose                                                                                             |
+| -------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `docs/handbook.md`                                 | Organized usage, design, testing and evidence navigation.                                           |
+| `docs/reports/project-guide.docx`                  | Source-bound reviewed Word guide.                                                                   |
+| `docs/reports/publications.json`                   | Exact publication hashes and page approvals.                                                        |
+| `docs/reports/documentation-refresh-2026-11-09.md` | Dated integration checks and interpretation limits.                                                 |
+| `scripts/publication-text.mjs`                     | Bounded descriptor/ZIP XML reader for the exact reviewed guide, preserving existing content checks. |
+| `scripts/publication-text.test.mjs`                | Actual compressed Word and independent malformed/stored ZIP regression fixtures.                    |
