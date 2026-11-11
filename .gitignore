@@ -12,3 +12,11 @@ test-results/
 Thumbs.db
 .idea/
 .vscode/
+.runtime/
+release/
+artifacts/native/
+desktop/node_modules/
+
+__pycache__/
+
+*.pyc

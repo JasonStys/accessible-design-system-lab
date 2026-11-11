@@ -22,6 +22,10 @@ export default tseslint.config(
       "playwright-report",
       "storybook-static",
       "test-results",
+      ".runtime/**",
+      "release/**",
+      "artifacts/**",
+      "desktop/node_modules/**",
     ],
   },
   eslint.configs.recommended,
@@ -62,7 +66,12 @@ export default tseslint.config(
     languageOptions: { globals: { ...globals.browser, ...globals.es2023 } },
   },
   {
-    files: ["**/*.{js,mjs}"],
+    files: ["**/*.{js,mjs,cjs}"],
     ...tseslint.configs.disableTypeChecked,
+  },
+  {
+    files: ["desktop/**/*.cjs"],
+    rules: { "@typescript-eslint/no-require-imports": "off" },
+    languageOptions: { globals: { ...globals.node, ...globals.es2023 } },
   },
 );

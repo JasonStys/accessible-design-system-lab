@@ -10,7 +10,15 @@ import { fileURLToPath } from "node:url";
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const outputPath = join(repositoryRoot, "docs", "code-index.md");
-const supportedExtensions = new Set([".ts", ".tsx", ".mjs", ".js", ".sh"]);
+const supportedExtensions = new Set([
+  ".ts",
+  ".tsx",
+  ".mjs",
+  ".cjs",
+  ".py",
+  ".js",
+  ".sh",
+]);
 const excludedDirectories = new Set([
   ".git",
   ".npm-cache",
@@ -20,8 +28,13 @@ const excludedDirectories = new Set([
   "playwright-report",
   "storybook-static",
   "test-results",
+  "__pycache__",
+  ".runtime",
+  "release",
+  "artifacts",
 ]);
 const patterns = [
+  /^\s*(?:async\s+)?(?:def|class)\s+([A-Za-z_]\w*)/,
   /\b(?:function|class|interface|type|enum)\s+([A-Za-z_$][\w$]*)/,
   /\b(?:const|let)\s+([A-Za-z_$][\w$]*)\b/,
   /^\s*([A-Z][A-Z0-9_]+)\s*=/,

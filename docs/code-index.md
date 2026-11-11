@@ -11,6 +11,146 @@ declaration and important-variable locations. Regenerate after source edits.
 
 - Line 12: `preview`
 
+## `desktop/assets.cjs`
+
+- Line 8: `http`
+- Line 12: `CSP`
+- Line 14: `types`
+- Line 24: `verifiedAssets`
+- Line 25: `metadata`
+- Line 38: `assets`
+- Line 39: `total`
+- Line 54: `data`
+- Line 64: `type`
+- Line 79: `assetServer`
+- Line 80: `authority`
+- Line 81: `server`
+- Line 82: `name`
+- Line 83: `asset`
+
+## `desktop/files.cjs`
+
+- Line 8: `fs`
+- Line 11: `ancestors`
+- Line 12: `current`
+- Line 15: `value`
+- Line 21: `parent`
+- Line 27: `readRegular`
+- Line 29: `descriptor`
+- Line 37: `named`
+- Line 38: `actual`
+- Line 51: `buffer`
+- Line 52: `count`
+- Line 54: `size`
+- Line 72: `newFile`
+- Line 74: `descriptor`
+- Line 84: `readUtf8`
+
+## `desktop/main.cjs`
+
+- Line 9: `fs`
+- Line 10: `os`
+- Line 17: `VERSION`
+- Line 18: `window`
+- Line 24: `pending`
+- Line 25: `explicitIndex`
+- Line 26: `acceptance`
+- Line 27: `shellRoot`
+- Line 33: `sender`
+- Line 45: `operation`
+- Line 47: `promise`
+- Line 55: `closeOwned`
+- Line 66: `results`
+- Line 100: `start`
+- Line 101: `resources`
+- Line 109: `name`
+- Line 118: `content`
+- Line 126: `model`
+- Line 129: `directory`
+- Line 156: `forbidden`
+- Line 175: `session`
+- Line 201: `selected`
+- Line 206: `text`
+- Line 220: `project`
+- Line 221: `kind`
+- Line 222: `content`
+- Line 230: `selected`
+
+## `desktop/profile.cjs`
+
+- Line 8: `fs`
+- Line 12: `PRODUCT`
+- Line 13: `MAX`
+- Line 14: `names`
+- Line 22: `admittedPath`
+- Line 25: `directory`
+- Line 27: `program`
+- Line 28: `inside`
+- Line 38: `entries`
+- Line 46: `name`
+- Line 60: `openProfile`
+- Line 61: `directory`
+- Line 62: `marker`
+- Line 65: `identity`
+- Line 86: `token`
+- Line 97: `closed`
+- Line 98: `file`
+- Line 100: `owned`
+- Line 106: `load`
+- Line 109: `bytes`
+- Line 110: `project`
+- Line 119: `replace`
+- Line 121: `pending`
+- Line 128: `save`
+- Line 137: `current`
+- Line 142: `project`
+- Line 150: `close`
+
+## `desktop/tests/assets.test.cjs`
+
+- Line 8: `assert`
+- Line 9: `fs`
+- Line 10: `os`
+- Line 11: `http`
+- Line 16: `fixture`
+- Line 17: `root`
+- Line 19: `rows`
+- Line 22: `schema`
+- Line 24: `files`
+- Line 29: `metadata`
+- Line 41: `get`
+- Line 43: `agent`
+- Line 44: `request`
+- Line 48: `body`
+- Line 72: `server`
+- Line 74: `okay`
+- Line 85: `path`
+- Line 113: `kind`
+
+## `desktop/tests/profile.test.cjs`
+
+- Line 7: `assert`
+- Line 8: `fs`
+- Line 9: `os`
+- Line 13: `fresh`
+- Line 14: `identity`
+- Line 23: `root`
+- Line 26: `first`
+- Line 31: `original`
+- Line 47: `second`
+- Line 62: `restarted`
+- Line 68: `name`
+- Line 72: `root`
+- Line 78: `root`
+- Line 85: `name`
+- Line 91: `root`
+- Line 107: `before`
+- Line 116: `root`
+- Line 137: `root`
+- Line 139: `saved`
+- Line 143: `outside`
+- Line 158: `root`
+
 ## `eslint.config.js`
 
 - Line 13: `sourceFiles`
@@ -19,6 +159,57 @@ declaration and important-variable locations. Regenerate after source edits.
 ## `playwright.config.ts`
 
 - Line 10: `projects`
+
+## `scripts/archive_native.py`
+
+- Line 18: `ROOT`
+- Line 19: `MAX_MEMBERS`
+- Line 20: `MAX_TOTAL`
+- Line 21: `MAX_MEMBER`
+- Line 22: `BLOCK`
+- Line 23: `RESERVED`
+- Line 33: `require`
+- Line 39: `real_directory`
+- Line 52: `create_archive`
+- Line 129: `extract_archive`
+- Line 185: `main`
+
+## `scripts/build-native.mjs`
+
+- Line 16: `root`
+- Line 17: `run`
+- Line 18: `output`
+- Line 22: `staging`
+- Line 27: `version`
+- Line 29: `checked`
+- Line 41: `git`
+- Line 51: `fingerprint`
+- Line 52: `names`
+- Line 69: `path`
+- Line 81: `inventory`
+- Line 82: `files`
+- Line 83: `row`
+- Line 86: `name`
+- Line 97: `icon`
+- Line 98: `side`
+- Line 102: `y`
+- Line 103: `x`
+- Line 104: `column`
+- Line 107: `offset`
+- Line 108: `color`
+- Line 124: `image`
+- Line 141: `source`
+- Line 149: `before`
+- Line 188: `files`
+- Line 189: `name`
+- Line 193: `owner`
+- Line 194: `name`
+- Line 221: `notices`
+- Line 227: `name`
+- Line 228: `file`
+- Line 234: `ico`
+- Line 236: `configuration`
+- Line 242: `configurationPath`
 
 ## `scripts/check-bundle.mjs`
 
@@ -45,61 +236,67 @@ declaration and important-variable locations. Regenerate after source edits.
 - Line 11: `repositoryRoot`
 - Line 12: `outputPath`
 - Line 13: `supportedExtensions`
-- Line 14: `excludedDirectories`
-- Line 24: `patterns`
-- Line 31: `walk`
-- Line 33: `path`
-- Line 41: `extract`
-- Line 45: `pattern`
-- Line 46: `match`
-- Line 54: `render`
-- Line 55: `lines`
-- Line 62: `path`
-- Line 63: `declarations`
-- Line 65: `repositoryPath`
-- Line 67: `declaration`
-- Line 75: `main`
-- Line 76: `generated`
+- Line 22: `excludedDirectories`
+- Line 36: `patterns`
+- Line 44: `walk`
+- Line 46: `path`
+- Line 54: `extract`
+- Line 58: `pattern`
+- Line 59: `match`
+- Line 67: `render`
+- Line 68: `lines`
+- Line 75: `path`
+- Line 76: `declarations`
+- Line 78: `repositoryPath`
+- Line 80: `declaration`
+- Line 88: `main`
+- Line 89: `generated`
 
 ## `scripts/package-smoke.mjs`
 
-- Line 19: `repositoryRoot`
-- Line 20: `expectedExports`
-- Line 29: `reviewedLock`
-- Line 32: `npmEnvironment`
-- Line 45: `runNpm`
-- Line 46: `cli`
-- Line 51: `result`
-- Line 67: `consumerFiles`
-- Line 68: `peers`
-- Line 70: `entry`
-- Line 103: `installed`
-- Line 106: `name`
-- Line 107: `actual`
-- Line 108: `reviewed`
-- Line 116: `installedRoot`
-- Line 123: `manifest`
-- Line 138: `exported`
-- Line 141: `rows`
-- Line 147: `App`
-- Line 163: `exercise`
-- Line 164: `table`
-- Line 177: `sort`
-- Line 258: `main`
-- Line 259: `consumer`
-- Line 262: `server`
-- Line 263: `browser`
-- Line 265: `pack`
-- Line 271: `filename`
-- Line 277: `archivePath`
-- Line 278: `archiveHash`
-- Line 281: `version`
-- Line 295: `address`
-- Line 297: `origin`
-- Line 298: `outside`
-- Line 299: `pageErrors`
-- Line 301: `context`
-- Line 302: `page`
+- Line 32: `repositoryRoot`
+- Line 33: `expectedExports`
+- Line 42: `reviewedLock`
+- Line 45: `npmEnvironment`
+- Line 58: `runNpm`
+- Line 59: `cli`
+- Line 64: `result`
+- Line 80: `consumerFiles`
+- Line 81: `peers`
+- Line 84: `entry`
+- Line 118: `installed`
+- Line 121: `name`
+- Line 122: `actual`
+- Line 123: `reviewed`
+- Line 131: `installedRoot`
+- Line 138: `manifest`
+- Line 153: `exported`
+- Line 156: `rows`
+- Line 162: `App`
+- Line 178: `checks`
+- Line 179: `generatedConsumer`
+- Line 180: `all`
+- Line 191: `projects`
+- Line 210: `result`
+- Line 256: `exerciseGenerated`
+- Line 310: `exercise`
+- Line 311: `table`
+- Line 324: `sort`
+- Line 405: `main`
+- Line 406: `consumer`
+- Line 409: `server`
+- Line 410: `browser`
+- Line 412: `pack`
+- Line 418: `filename`
+- Line 424: `archivePath`
+- Line 425: `archiveHash`
+- Line 428: `version`
+- Line 452: `address`
+- Line 454: `origin`
+- Line 455: `outside`
+- Line 456: `pageErrors`
+- Line 458: `context`
+- Line 459: `page`
 
 ## `scripts/publication-text.mjs`
 
@@ -193,37 +390,199 @@ declaration and important-variable locations. Regenerate after source edits.
 - Line 16: `child`
 - Line 33: `server`
 
+## `scripts/test-native-app.mjs`
+
+- Line 25: `root`
+- Line 26: `executable`
+- Line 30: `output`
+- Line 38: `scratch`
+- Line 43: `metadata`
+- Line 57: `name`
+- Line 70: `environment`
+- Line 77: `outsideRequests`
+- Line 79: `proxyRequests`
+- Line 81: `proxy`
+- Line 89: `launch`
+- Line 90: `application`
+- Line 100: `page`
+- Line 107: `origin`
+- Line 128: `finish`
+- Line 129: `exit`
+- Line 133: `timer`
+- Line 134: `result`
+- Line 164: `finishAfterHeldExport`
+- Line 165: `target`
+- Line 179: `exit`
+- Line 181: `owner`
+- Line 200: `timer`
+- Line 201: `result`
+- Line 232: `first`
+- Line 256: `draft`
+- Line 257: `custom`
+- Line 264: `preview`
+- Line 308: `finalProject`
+- Line 335: `currentFile`
+- Line 351: `target`
+- Line 365: `imported`
+- Line 411: `second`
+- Line 425: `receipt`
+
 ## `scripts/validate-repository.mjs`
 
 - Line 12: `repositoryRoot`
 - Line 13: `requiredFiles`
 - Line 34: `headerExtensions`
-- Line 45: `excludedDirectories`
-- Line 55: `prohibitedPatterns`
-- Line 64: `walk`
-- Line 66: `path`
-- Line 74: `brokenMarkdownLinks`
-- Line 75: `markdown`
-- Line 77: `target`
-- Line 79: `localTarget`
-- Line 85: `main`
-- Line 86: `failures`
-- Line 87: `requiredFile`
-- Line 91: `path`
-- Line 92: `repositoryPath`
-- Line 93: `content`
-- Line 95: `target`
-- Line 101: `firstLines`
-- Line 105: `prohibited`
+- Line 47: `excludedDirectories`
+- Line 61: `prohibitedPatterns`
+- Line 70: `walk`
+- Line 72: `path`
+- Line 80: `brokenMarkdownLinks`
+- Line 81: `markdown`
+- Line 83: `target`
+- Line 85: `localTarget`
+- Line 91: `main`
+- Line 92: `failures`
+- Line 93: `requiredFile`
+- Line 97: `path`
+- Line 98: `repositoryPath`
+- Line 99: `content`
+- Line 101: `target`
+- Line 107: `firstLines`
+- Line 111: `prohibited`
 
 ## `src/App.tsx`
 
 - Line 16: `ToastMessage`
-- Line 20: `roleOptions`
-- Line 27: `interactionRows`
-- Line 55: `App`
-- Line 67: `announceSelection`
-- Line 99: `coverage`
+- Line 21: `roleOptions`
+- Line 28: `interactionRows`
+- Line 56: `App`
+- Line 68: `announceSelection`
+- Line 100: `coverage`
+
+## `src/authoring/Workspace.tsx`
+
+- Line 8: `CSSProperties`
+- Line 17: `Block`
+- Line 18: `DesignProject`
+- Line 22: `SavedDesign`
+- Line 26: `NativeDesign`
+- Line 40: `Window`
+- Line 44: `palette`
+- Line 55: `BlockPreview`
+- Line 134: `Workspace`
+- Line 135: `initial`
+- Line 148: `native`
+- Line 149: `selectedBlock`
+- Line 150: `selectedSource`
+- Line 153: `blockDirty`
+- Line 154: `dirty`
+- Line 155: `contrast`
+- Line 158: `apply`
+- Line 163: `next`
+- Line 179: `guarded`
+- Line 188: `task`
+- Line 205: `change`
+- Line 213: `current`
+- Line 218: `exportFile`
+- Line 220: `serialized`
+- Line 222: `saved`
+- Line 228: `content`
+- Line 234: `url`
+- Line 237: `link`
+- Line 279: `name`
+- Line 313: `saved`
+- Line 332: `saved`
+- Line 351: `value`
+- Line 438: `count`
+- Line 490: `index`
+- Line 500: `removed`
+- Line 543: `value`
+- Line 548: `candidate`
+- Line 554: `next`
+
+## `src/authoring/project.test.ts`
+
+- Line 15: `DesignProject`
+- Line 18: `encode`
+- Line 19: `valid`
+- Line 25: `first`
+- Line 33: `value`
+- Line 73: `value`
+- Line 81: `blocks`
+- Line 98: `value`
+- Line 101: `changes`
+- Line 114: `change`
+- Line 127: `block`
+- Line 166: `yellow`
+- Line 173: `source`
+- Line 184: `project`
+- Line 185: `source`
+- Line 188: `Blueprint`
+- Line 191: `value`
+- Line 205: `result`
+- Line 206: `compiled`
+- Line 216: `component`
+- Line 230: `value`
+- Line 240: `source`
+- Line 245: `style`
+
+## `src/authoring/project.ts`
+
+- Line 8: `Choice`
+- Line 12: `Column`
+- Line 16: `Block`
+- Line 55: `DesignProject`
+- Line 67: `MAX_PROJECT_BYTES`
+- Line 68: `keyPattern`
+- Line 69: `encoder`
+- Line 72: `record`
+- Line 78: `result`
+- Line 84: `text`
+- Line 90: `code`
+- Line 102: `key`
+- Line 109: `choice`
+- Line 114: `list`
+- Line 119: `unique`
+- Line 125: `block`
+- Line 128: `kind`
+- Line 137: `fields`
+- Line 146: `row`
+- Line 147: `id`
+- Line 180: `options`
+- Line 181: `option`
+- Line 188: `items`
+- Line 189: `tab`
+- Line 208: `columns`
+- Line 209: `column`
+- Line 213: `rows`
+- Line 214: `tableRow`
+- Line 249: `parseProject`
+- Line 252: `data`
+- Line 261: `appearance`
+- Line 272: `blocks`
+- Line 289: `preparedProject`
+- Line 292: `common`
+- Line 400: `paletteBlock`
+- Line 401: `samples`
+- Line 406: `sample`
+- Line 412: `literal`
+- Line 422: `reactSource`
+- Line 423: `validated`
+- Line 424: `kinds`
+- Line 425: `messageState`
+- Line 426: `dialogState`
+- Line 427: `imports`
+- Line 428: `kind`
+- Line 436: `declarations`
+- Line 444: `children`
+- Line 462: `Blueprint`
+- Line 466: `cssSource`
+- Line 467: `safe`
+- Line 472: `buttonContrast`
+- Line 476: `values`
+- Line 479: `linear`
+- Line 482: `luminance`
+- Line 486: `dark`
 
 ## `src/components/Button.tsx`
 
@@ -409,6 +768,18 @@ declaration and important-variable locations. Regenerate after source edits.
 - Line 33: `openDialog`
 - Line 40: `closeDialog`
 
+## `tests/e2e/authoring.spec.ts`
+
+- Line 18: `draft`
+- Line 19: `preview`
+- Line 22: `project`
+- Line 60: `download`
+- Line 64: `result`
+- Line 65: `path`
+- Line 86: `draft`
+- Line 92: `preview`
+- Line 105: `original`
+
 ## `tests/e2e/design-system.spec.ts`
 
 - Line 14: `table`
@@ -417,6 +788,20 @@ declaration and important-variable locations. Regenerate after source edits.
 - Line 81: `results`
 - Line 95: `application`
 - Line 99: `transitionDuration`
+
+## `tests/test_native_archive.py`
+
+- Line 16: `SPEC`
+- Line 24: `ArchiveBoundaries`
+- Line 27: `setUp`
+- Line 31: `tearDown`
+- Line 34: `test_real_payload_with_old_vendor_timestamp_roundtrips_without_replacement`
+- Line 54: `test_actual_hardlinked_payload_refuses_without_touching_outside_bytes`
+- Line 65: `test_malicious_names_fail_before_output_creation`
+- Line 89: `test_case_collisions_and_declared_links_fail_before_output`
+- Line 102: `test_actual_declared_expansion_budget_is_enforced_before_output`
+- Line 113: `test_real_source_growth_after_inventory_cannot_silently_enter_archive`
+- Line 120: `changed`
 
 ## `vite.config.ts`
 

@@ -16,6 +16,7 @@ import {
   type ToastMessage,
 } from "./index";
 import "./styles/demo.css";
+import { Workspace } from "./authoring/Workspace";
 
 const roleOptions = [
   { label: "Frontend engineer", value: "frontend" },
@@ -103,6 +104,7 @@ export function App() {
           </aside>
         </header>
 
+        <Workspace />
         <section aria-label="Display controls" className="demo-toolbar">
           <Button
             onClick={() =>
