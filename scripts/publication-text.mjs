@@ -191,7 +191,10 @@ function wordText(bytes) {
 /** Decode ordinary source strictly; only the exact reviewed edition receives bounded ZIP handling. */
 export function publicationText(path, repositoryPath) {
   const bytes = boundedBytes(path);
-  return repositoryPath === "docs/reports/project-guide.docx"
+  return [
+    "docs/reports/project-guide.docx",
+    "docs/reports/windows-application-guide-1.1.0.docx",
+  ].includes(repositoryPath)
     ? wordText(bytes)
     : utf8.decode(bytes);
 }
