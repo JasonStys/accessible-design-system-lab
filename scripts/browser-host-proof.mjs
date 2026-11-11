@@ -4,7 +4,6 @@
  * Symbols and line locations: see docs/code-index.md.
  * State: CI-only owned browser; no host-validation skip, alternate executable, OS package change or private profile.
  */
-import { chromium } from "@playwright/test";
 import { execFileSync } from "node:child_process";
 import {
   readFileSync,
@@ -69,6 +68,9 @@ export async function proveBrowserHost() {
   );
   if (!expected?.browserVersion)
     throw new Error("Pinned browser version metadata is missing.");
+  // The dependency-closure regression also runs in the dependency-free policy job.
+  // Only the actual browser journey imports the locked browser tooling.
+  const { chromium } = await import("@playwright/test");
   const browser = await chromium.launch({ headless: true });
   try {
     if (browser.version() !== expected.browserVersion)

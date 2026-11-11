@@ -176,37 +176,39 @@ declaration and important-variable locations. Regenerate after source edits.
 
 ## `scripts/browser-host-proof.mjs`
 
-- Line 21: `requireDependencyClosure`
-- Line 24: `result`
-- Line 36: `proveBrowserHost`
-- Line 47: `key`
-- Line 55: `cache`
-- Line 58: `root`
-- Line 61: `manifest`
-- Line 67: `expected`
-- Line 72: `browser`
-- Line 76: `cdp`
-- Line 77: `processes`
-- Line 78: `main`
-- Line 89: `executable`
-- Line 92: `linkedLibraries`
-- Line 93: `font`
-- Line 110: `context`
-- Line 111: `outside`
-- Line 116: `page`
-- Line 118: `layouts`
-- Line 119: `width`
-- Line 124: `observed`
-- Line 125: `canvas`
-- Line 159: `proof`
-- Line 173: `folder`
+- Line 20: `requireDependencyClosure`
+- Line 23: `result`
+- Line 35: `proveBrowserHost`
+- Line 46: `key`
+- Line 54: `cache`
+- Line 57: `root`
+- Line 60: `manifest`
+- Line 66: `expected`
+- Line 74: `browser`
+- Line 78: `cdp`
+- Line 79: `processes`
+- Line 80: `main`
+- Line 91: `executable`
+- Line 94: `linkedLibraries`
+- Line 95: `font`
+- Line 112: `context`
+- Line 113: `outside`
+- Line 118: `page`
+- Line 120: `layouts`
+- Line 121: `width`
+- Line 126: `observed`
+- Line 127: `canvas`
+- Line 161: `proof`
+- Line 175: `folder`
 
 ## `scripts/browser-host-proof.test.mjs`
 
-- Line 23: `root`
-- Line 24: `library`
-- Line 26: `executable`
-- Line 37: `args`
+- Line 17: `root`
+- Line 22: `result`
+- Line 46: `root`
+- Line 47: `library`
+- Line 49: `executable`
+- Line 60: `args`
 
 ## `scripts/browser-runner-policy.mjs`
 

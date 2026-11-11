@@ -6,12 +6,35 @@
  */
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { mkdtempSync, writeFileSync, renameSync } from "node:fs";
+import { mkdtempSync, writeFileSync, renameSync, copyFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 import process from "node:process";
 import { requireDependencyClosure } from "./browser-host-proof.mjs";
+
+test("dependency-only policy checks load the actual helper without installed packages", () => {
+  const root = mkdtempSync(join(tmpdir(), "design-owned-no-dependencies-"));
+  copyFileSync(
+    new URL("./browser-host-proof.mjs", import.meta.url),
+    join(root, "browser-host-proof.mjs"),
+  );
+  const result = execFileSync(
+    process.execPath,
+    [
+      "--input-type=module",
+      "-e",
+      'import { requireDependencyClosure } from "./browser-host-proof.mjs"; if (typeof requireDependencyClosure !== "function") throw new Error("Missing real dependency check"); console.log("actual dependency-free module loaded");',
+    ],
+    {
+      cwd: root,
+      encoding: "utf8",
+      timeout: 5_000,
+      maxBuffer: 65_536,
+    },
+  );
+  assert.equal(result.trim(), "actual dependency-free module loaded");
+});
 
 test("a relative or missing executable cannot satisfy dependency proof", () => {
   assert.throws(() => requireDependencyClosure("not-an-owned-absolute-file"));
