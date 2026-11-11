@@ -52,7 +52,10 @@ jobs:
 
   package:
     name: Package, Storybook, and bundle verification
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.runtime/ci-playwright
     steps:
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -67,8 +70,12 @@ jobs:
         run: npm run build
       - name: Enforce compressed bundle budgets
         run: npm run bundle:check
-      - name: Install browser for actual installed-package acceptance
-        run: npx playwright install --with-deps chromium
+      - name: Install the exact locked Chromium browser
+        timeout-minutes: 5
+        run: npx playwright install chromium
+      - name: Prove actual browser library closure and font/layout behavior
+        timeout-minutes: 2
+        run: node scripts/browser-host-proof.mjs
       - name: Install packed artifact and exercise actual consumer React workflows
         run: npm run package:smoke
       - name: Build component documentation
@@ -81,6 +88,7 @@ jobs:
         with:
           name: package-and-storybook
           path: |
+            artifacts/browser-host/proof.json
             dist
             storybook-static
             docs/reports/generated/bundle-budget.json
@@ -88,7 +96,10 @@ jobs:
 
   browser:
     name: Desktop and mobile accessibility workflows
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.runtime/ci-playwright
     steps:
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -99,8 +110,12 @@ jobs:
           cache: npm
       - name: Install locked dependencies
         run: npm ci
-      - name: Install Chromium and system dependencies
-        run: npx playwright install --with-deps chromium
+      - name: Install the exact locked Chromium browser
+        timeout-minutes: 5
+        run: npx playwright install chromium
+      - name: Prove actual browser library closure and font/layout behavior
+        timeout-minutes: 2
+        run: node scripts/browser-host-proof.mjs
       - name: Run keyboard, axe, RTL, motion, and vanilla scenarios
         run: npm run test:e2e
       - name: Upload browser evidence
@@ -109,6 +124,7 @@ jobs:
         with:
           name: browser-report
           path: |
+            artifacts/browser-host/proof.json
             playwright-report
             test-results
           if-no-files-found: warn

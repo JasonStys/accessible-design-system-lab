@@ -174,6 +174,62 @@ declaration and important-variable locations. Regenerate after source edits.
 - Line 129: `extract_archive`
 - Line 185: `main`
 
+## `scripts/browser-host-proof.mjs`
+
+- Line 20: `requireDependencyClosure`
+- Line 23: `result`
+- Line 35: `proveBrowserHost`
+- Line 46: `key`
+- Line 54: `cache`
+- Line 57: `root`
+- Line 60: `manifest`
+- Line 66: `expected`
+- Line 74: `browser`
+- Line 78: `cdp`
+- Line 79: `processes`
+- Line 80: `main`
+- Line 91: `executable`
+- Line 94: `linkedLibraries`
+- Line 95: `font`
+- Line 112: `context`
+- Line 113: `outside`
+- Line 118: `page`
+- Line 120: `layouts`
+- Line 121: `width`
+- Line 126: `observed`
+- Line 127: `canvas`
+- Line 161: `proof`
+- Line 175: `folder`
+
+## `scripts/browser-host-proof.test.mjs`
+
+- Line 17: `root`
+- Line 22: `result`
+- Line 46: `root`
+- Line 47: `library`
+- Line 49: `executable`
+- Line 60: `args`
+
+## `scripts/browser-runner-policy.mjs`
+
+- Line 8: `job`
+- Line 9: `lines`
+- Line 10: `starts`
+- Line 15: `start`
+- Line 16: `next`
+- Line 22: `validateBrowserSetup`
+- Line 23: `name`
+- Line 24: `text`
+- Line 42: `commands`
+- Line 52: `command`
+- Line 57: `install`
+- Line 60: `proof`
+- Line 63: `acceptance`
+
+## `scripts/browser-runner-policy.test.mjs`
+
+- Line 11: `original`
+
 ## `scripts/build-native.mjs`
 
 - Line 16: `root`
