@@ -174,21 +174,55 @@ declaration and important-variable locations. Regenerate after source edits.
 - Line 129: `extract_archive`
 - Line 185: `main`
 
+## `scripts/browser-host-proof.mjs`
+
+- Line 21: `requireDependencyClosure`
+- Line 24: `result`
+- Line 36: `proveBrowserHost`
+- Line 47: `key`
+- Line 55: `cache`
+- Line 58: `root`
+- Line 61: `manifest`
+- Line 67: `expected`
+- Line 72: `browser`
+- Line 76: `cdp`
+- Line 77: `processes`
+- Line 78: `main`
+- Line 89: `executable`
+- Line 92: `linkedLibraries`
+- Line 93: `font`
+- Line 110: `context`
+- Line 111: `outside`
+- Line 116: `page`
+- Line 118: `layouts`
+- Line 119: `width`
+- Line 124: `observed`
+- Line 125: `canvas`
+- Line 159: `proof`
+- Line 173: `folder`
+
+## `scripts/browser-host-proof.test.mjs`
+
+- Line 23: `root`
+- Line 24: `library`
+- Line 26: `executable`
+- Line 37: `args`
+
 ## `scripts/browser-runner-policy.mjs`
 
-- Line 7: `officialMirrorStep`
-- Line 11: `job`
-- Line 12: `lines`
-- Line 13: `starts`
-- Line 18: `start`
-- Line 19: `next`
-- Line 25: `validateBrowserSetup`
-- Line 26: `name`
-- Line 27: `text`
-- Line 43: `commands`
-- Line 53: `command`
-- Line 58: `install`
-- Line 61: `acceptance`
+- Line 8: `job`
+- Line 9: `lines`
+- Line 10: `starts`
+- Line 15: `start`
+- Line 16: `next`
+- Line 22: `validateBrowserSetup`
+- Line 23: `name`
+- Line 24: `text`
+- Line 42: `commands`
+- Line 52: `command`
+- Line 57: `install`
+- Line 60: `proof`
+- Line 63: `acceptance`
 
 ## `scripts/browser-runner-policy.test.mjs`
 

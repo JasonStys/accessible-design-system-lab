@@ -13,7 +13,7 @@ const original = readFileSync(
   "utf8",
 ).replaceAll("\r\n", "\n");
 
-test("both actual browser jobs retain the signed bounded setup and original test commands", () => {
+test("both actual browser jobs retain the actual bounded host proof and original test commands", () => {
   validateBrowserSetup(original);
 });
 for (const [label, before, after] of [
@@ -22,35 +22,31 @@ for (const [label, before, after] of [
     "    runs-on: ubuntu-24.04",
     "    runs-on: ubuntu-latest",
   ],
+  ["unbounded setup", "    timeout-minutes: 20", "    timeout-minutes: 120"],
   [
-    "wrong OS guard",
-    'test "$VERSION_ID" = "24.04"',
-    'test "$VERSION_ID" = "26.04"',
+    "unowned browser cache",
+    "${{ github.workspace }}/.runtime/ci-playwright",
+    "/tmp/unknown-shared-browser",
   ],
   [
-    "missing signature-key guard",
-    "test -f /usr/share/keyrings/ubuntu-archive-keyring.gpg",
-    "true",
+    "wrong browser download",
+    "run: npx playwright install chromium",
+    "run: npx playwright install firefox",
   ],
   [
-    "unauthenticated package fetch",
-    "run: npx playwright install-deps chromium",
-    "run: npx playwright install-deps chromium --allow-unauthenticated",
+    "missing actual host proof",
+    "run: node scripts/browser-host-proof.mjs",
+    "run: echo omitted",
   ],
   [
-    "ineffective APT option namespace",
-    'Acquire::Retries "1";',
-    'APT::Acquire::Retries "1";',
+    "skipped host validation",
+    "run: node scripts/browser-host-proof.mjs",
+    "run: PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=1 node scripts/browser-host-proof.mjs",
   ],
   [
-    "missing effective-value assertion",
-    "grep -Fx 'Acquire::https::Timeout",
-    "printf '%s' 'Acquire::https::Timeout",
-  ],
-  [
-    "combined unbounded setup",
-    "run: npx playwright install-deps chromium",
-    "run: npx playwright install --with-deps chromium",
+    "masked host failure",
+    "run: node scripts/browser-host-proof.mjs",
+    "run: node scripts/browser-host-proof.mjs || true",
   ],
   [
     "removed installed consumer",

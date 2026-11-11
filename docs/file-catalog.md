@@ -58,7 +58,7 @@
 
 ## Documentation
 
-- `scripts/browser-runner-policy.mjs` and `scripts/browser-runner-policy.test.mjs` — actual workflow and mutation regressions for the two bounded signed browser-setup recipes; original acceptance commands remain mandatory.
+- `scripts/browser-runner-policy.mjs` and `scripts/browser-runner-policy.test.mjs` — actual workflow and mutation regressions for the two bounded actual-browser host-proof recipes; original acceptance commands remain mandatory.
 - `docs/reports/browser-runner-setup-2026-11-11.md` — actual pre-test DNS failure evidence, CI-only repair, primary references and pending hosted verification boundary.
 
 `docs/` contains architecture, API, accessibility, tokens, complexity, testing, operations, research,
@@ -74,3 +74,6 @@ an ADR, generated code locations, and evidence reports. README links to each rea
 | `docs/reports/documentation-refresh-2026-11-09.md` | Dated integration checks and interpretation limits.                                                 |
 | `scripts/publication-text.mjs`                     | Bounded descriptor/ZIP XML reader for the exact reviewed guide, preserving existing content checks. |
 | `scripts/publication-text.test.mjs`                | Actual compressed Word and independent malformed/stored ZIP regression fixtures.                    |
+
+- `scripts/browser-host-proof.mjs` — actual locked Chromium/PID/linkage and Latin font/layout readiness before all original browser gates.
+- `scripts/browser-host-proof.test.mjs` — actual Linux ELF missing-library negative and invalid-path refusal; no app/private profile.
