@@ -6,7 +6,14 @@
  * Important variables: expectedExports, reviewedLock and consumer; source aliases and existing servers are never used.
  */
 import assert from "node:assert/strict";
-import { mkdtemp, readFile, realpath, rm, writeFile } from "node:fs/promises";
+import {
+  mkdir,
+  mkdtemp,
+  readFile,
+  realpath,
+  rm,
+  writeFile,
+} from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { tmpdir } from "node:os";
 import { basename, dirname, join, resolve, sep } from "node:path";
@@ -15,6 +22,12 @@ import { fileURLToPath } from "node:url";
 import { build, preview } from "vite";
 import { chromium } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import {
+  paletteBlock,
+  preparedProject,
+  reactSource,
+  cssSource,
+} from "../src/authoring/project.ts";
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const expectedExports = [
@@ -66,14 +79,16 @@ function runNpm(args, cwd) {
 /** Write an independent consumer that imports only the installed package and declared public stylesheet. */
 async function consumerFiles(consumer, archivePath) {
   const peers = Object.fromEntries(
-    ["react", "react-dom", "scheduler"].map((name) => {
-      const entry = reviewedLock.packages[`node_modules/${name}`];
-      assert.ok(
-        entry?.version && entry.integrity,
-        `Reviewed ${name} peer identity missing`,
-      );
-      return [name, entry.version];
-    }),
+    ["react", "react-dom", "scheduler", "@types/react", "@types/react-dom"].map(
+      (name) => {
+        const entry = reviewedLock.packages[`node_modules/${name}`];
+        assert.ok(
+          entry?.version && entry.integrity,
+          `Reviewed ${name} peer identity missing`,
+        );
+        return [name, entry.version];
+      },
+    ),
   );
   await writeFile(
     join(consumer, "package.json"),
@@ -153,10 +168,142 @@ function App(){
    React.createElement(Public.Button,{onClick:()=>{setState('ready');setEmpty(true)}},'empty')),
   React.createElement(Public.DataTable,{caption:'Installed stock',columns:[{key:'product',label:'Product'},{key:'units',label:'Units',sortable:true}],rows:empty?[]:rows,pageSize:2,state}));
 }
+
 createRoot(document.getElementById('root')).render(React.createElement(App));
 `,
   );
   return manifest.version;
+}
+
+/** Compile every generated variant against the actual installed public package with strict unused/type checks. */
+async function generatedConsumer(consumer) {
+  const all = preparedProject();
+  all.title = "Generated component blueprint";
+  all.blocks = [
+    "text",
+    "field",
+    "button",
+    "choice",
+    "table",
+    "tabs",
+    "dialog",
+  ].map((kind) => paletteBlock(kind, kind + "-one"));
+  const projects = {
+    all,
+    service: preparedProject(),
+    operations: preparedProject("operations"),
+    preferences: preparedProject("preferences"),
+    empty: { ...preparedProject(), blocks: [] },
+  };
+  for (const [name, project] of Object.entries(projects))
+    await writeFile(
+      join(consumer, "Blueprint-" + name + ".tsx"),
+      reactSource(project),
+    );
+  // A real React bundler normally supplies CSS ambient types (for example vite/client).
+  // Declare only that asset-import contract here; runtime build still resolves actual CSS bytes.
+  await writeFile(
+    join(consumer, "bundler-env.d.ts"),
+    'declare module "*.css";\n',
+  );
+  await writeFile(join(consumer, "blueprint.css"), cssSource(all));
+  const result = spawnSync(
+    process.execPath,
+    [
+      join(repositoryRoot, "node_modules/typescript/bin/tsc"),
+      "--strict",
+      "--noUnusedLocals",
+      "--noUnusedParameters",
+      "--skipLibCheck",
+      "--target",
+      "ES2023",
+      "--lib",
+      "DOM,ES2023",
+      "--module",
+      "ESNext",
+      "--moduleResolution",
+      "Bundler",
+      "--jsx",
+      "react-jsx",
+      "--outDir",
+      "generated",
+      "bundler-env.d.ts",
+      ...Object.keys(projects).map((name) => "Blueprint-" + name + ".tsx"),
+    ],
+    {
+      cwd: consumer,
+      env: npmEnvironment,
+      encoding: "utf8",
+      windowsHide: true,
+      timeout: 30_000,
+      maxBuffer: 1024 * 1024,
+    },
+  );
+  assert.equal(result.status, 0, result.stdout + result.stderr);
+  await mkdir(join(consumer, "generated"), { recursive: true });
+  await writeFile(join(consumer, "generated/blueprint.css"), cssSource(all));
+  await writeFile(
+    join(consumer, "blueprint.html"),
+    '<!doctype html><html lang="en"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Generated blueprint consumer</title><div id="root"></div><script type="module" src="/blueprint-entry.js"></script></html>',
+  );
+  await writeFile(
+    join(consumer, "blueprint-entry.js"),
+    'import { createElement } from "react"; import { createRoot } from "react-dom/client"; import { Blueprint } from "./generated/Blueprint-all.js"; createRoot(document.getElementById("root")).render(createElement(Blueprint));',
+  );
+}
+
+/** Exercise the compiled generated output, not the repository preview component or a source alias. */
+async function exerciseGenerated(page) {
+  await page
+    .getByRole("heading", {
+      name: "Generated component blueprint",
+      exact: true,
+    })
+    .waitFor();
+  assert.equal(
+    await page
+      .locator(".authored-blueprint")
+      .evaluate((element) => globalThis.getComputedStyle(element).display),
+    "grid",
+  );
+  await page
+    .getByRole("textbox", { name: "Contact email", exact: false })
+    .fill("synthetic@example.test");
+  await page
+    .getByRole("button", { name: "Preview request", exact: true })
+    .click();
+  assert.equal(
+    await page
+      .getByRole("status")
+      .filter({ hasText: "Preview request activated" })
+      .count(),
+    1,
+  );
+  await page
+    .getByRole("button", { name: "Sort by Asset ascending", exact: true })
+    .click();
+  assert.equal(await page.locator('th[aria-sort="ascending"]').count(), 1);
+  await page
+    .getByRole("button", { name: "Review changes", exact: true })
+    .click();
+  await page
+    .getByRole("dialog", { name: "Review preferences", exact: true })
+    .waitFor();
+  await page.keyboard.press("Escape");
+  assert.equal(
+    await page
+      .getByRole("button", { name: "Review changes", exact: true })
+      .evaluate((element) => element === globalThis.document.activeElement),
+    true,
+  );
+  assert.deepEqual(
+    (
+      await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+        .analyze()
+    ).violations,
+    [],
+  );
 }
 
 /** Exercise actual installed-package DOM, numeric ordering, pagination focus and state transitions. */
@@ -279,10 +426,20 @@ async function main() {
       .update(await readFile(archivePath))
       .digest("hex");
     const version = await consumerFiles(consumer, archivePath);
+    await generatedConsumer(consumer);
     await build({
       root: consumer,
       configFile: false,
-      build: { outDir: "site", emptyOutDir: true },
+      build: {
+        outDir: "site",
+        emptyOutDir: true,
+        rollupOptions: {
+          input: {
+            catalog: join(consumer, "index.html"),
+            blueprint: join(consumer, "blueprint.html"),
+          },
+        },
+      },
       logLevel: "warn",
     });
     server = await preview({
@@ -312,6 +469,8 @@ async function main() {
     });
     await page.goto(origin);
     await exercise(page);
+    await page.goto(origin + "/blueprint.html");
+    await exerciseGenerated(page);
     assert.deepEqual(outside, []);
     assert.deepEqual(pageErrors, []);
     console.log(
@@ -333,6 +492,8 @@ async function main() {
           "empty",
           "axe0",
           "externalRequests0",
+          "five strict generated React variants",
+          "actual compiled generated component interactions",
         ],
       }),
     );

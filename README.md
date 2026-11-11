@@ -11,6 +11,19 @@ The project avoids unsupported conformance claims. Automated tools catch only pa
 accessibility surface, so the exact automated criteria and remaining manual checks are published in
 [the accessibility contract](docs/accessibility.md).
 
+## Practical authoring application
+
+The full catalog now includes an editable blueprint workspace using the real public
+components. Author fields, choices, tables, tabs, buttons and dialogs; reorder blocks;
+validate without losing the last good preview; and export literal React, CSS or JSON.
+The Windows application adds explicit local revision-aware Save/Load, bounded imports,
+new-file-only exports and a visible owner that waits for accepted file work during Quit.
+Prepared service, operations and preferences cases are inputs in this full app.
+
+The 1.1.0 native source is a portable candidate pending accepted publication, not a
+claim of an installed/signed release. See [native use, architecture and limits](docs/native-application.md).
+The reusable library/package and original Storybook/catalog contracts remain available.
+
 The catalog's interaction-reference table now demonstrates stable explicit-key
 sorting and pagination with native header buttons, `aria-sort`, live range
 announcements and deliberate keyboard focus. The reusable component also handles

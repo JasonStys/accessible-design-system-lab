@@ -1,6 +1,6 @@
 {
   "name": "accessible-design-system-lab",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Native-first React components, design tokens, accessibility evidence, and framework-independent examples.",
   "type": "module",
   "license": "MIT",
@@ -43,7 +43,10 @@
     "test": "vitest run --coverage",
     "test:e2e": "node scripts/run-browser-tests.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.node.json --noEmit",
-    "verify": "npm run format:check && npm run lint && npm run typecheck && npm run test && npm run build && npm run bundle:check && npm run package:smoke && npm run build:storybook && npm run symbols:check && npm run repository:check"
+    "verify": "npm run format:check && npm run lint && npm run typecheck && npm run test && npm run build && npm run bundle:check && npm run package:smoke && npm run build:storybook && npm run symbols:check && npm run repository:check",
+    "build:native": "node scripts/build-native.mjs",
+    "test:native-boundaries": "npm --prefix desktop test",
+    "test:native-app": "node scripts/test-native-app.mjs"
   },
   "peerDependencies": {
     "react": ">=19 <20",

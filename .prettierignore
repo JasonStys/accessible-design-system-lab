@@ -8,3 +8,11 @@ playwright-report
 test-results
 package-lock.json
 docs/code-index.md
+
+.runtime/
+
+release/
+
+artifacts/native/
+
+desktop/node_modules/

@@ -35,6 +35,8 @@ const headerExtensions = new Set([
   ".ts",
   ".tsx",
   ".mjs",
+  ".cjs",
+  ".py",
   ".js",
   ".css",
   ".sh",
@@ -51,6 +53,10 @@ const excludedDirectories = new Set([
   "playwright-report",
   "storybook-static",
   "test-results",
+  "__pycache__",
+  ".runtime",
+  "release",
+  "artifacts",
 ]);
 const prohibitedPatterns = [
   {

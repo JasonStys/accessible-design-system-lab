@@ -30,6 +30,22 @@
 
 ## Verification and automation
 
+- `src/authoring/project.ts` — closed, bounded component blueprints, realistic editable prepared inputs, contrast calculation and literal React/CSS generation.
+- `src/authoring/Workspace.tsx` — actual component editing, last-good preview, unapplied-change guards, explicit native load/save/import/export and help.
+- `src/authoring/workspace.css` — responsive authoring layout and native status presentation.
+- `src/authoring/project.test.ts` — independent model, boundary, escaping and generated-source oracles.
+- `tests/e2e/authoring.spec.ts` — actual browser editing, invalid-input preservation, unapplied selected-block changes and download journeys.
+- `desktop/main.cjs` and `desktop/preload.cjs` — sandboxed native window, fixed sender-checked IPC, direct-only public listener and retained operations during Quit.
+- `desktop/files.cjs`, `desktop/profile.cjs` and `desktop/assets.cjs` — bounded descriptor reads, single-owner external durable revisions and immutable allowlisted public assets.
+- `desktop/tests/` — real filesystem alias/revision, HTTP and resource-integrity regressions.
+- `desktop/package.json` and `desktop/package-lock.json` — private exact Electron/build/test tool graph, separate from the public reusable component package.
+- `scripts/build-native.mjs` — full real site/library build, source/resource hashes, runtime notices and fresh unsigned Windows packaging.
+- `scripts/archive_native.py` and `tests/test_native_archive.py` — bounded whole-bundle ZIP creation/extraction, alias/traversal refusal and actual relocated consumer invocation.
+- `scripts/test-native-app.mjs` — actual packaged two-launch component editing/export/persistence and pending-export repeated-close acceptance.
+- `.github/workflows/native-app.yml` — real Windows package acceptance, bounded proof retention and explicit trusted-main-only full-package opt-in.
+- `docs/native-application.md` — practical authoring/install/build workflow and concrete security/accessibility limits.
+- `docs/reports/native-application-2026-11-11.md` — observed validation, repaired candidate failures and honest test denominators.
+
 - `tests/e2e/design-system.spec.ts` — keyboard, axe, responsive, RTL, motion, and vanilla scenarios.
 - `scripts/clean.mjs` — allowlisted generated-output cleanup.
 - `scripts/check-bundle.mjs` — gzip budget and JSON evidence.

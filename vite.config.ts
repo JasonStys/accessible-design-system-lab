@@ -21,7 +21,7 @@ export default defineConfig({
   },
   test: {
     coverage: {
-      include: ["src/components/**/*.{ts,tsx}"],
+      include: ["src/components/**/*.{ts,tsx}", "src/authoring/project.ts"],
       provider: "v8",
       reporter: ["text", "html", "json-summary"],
       thresholds: { lines: 90, functions: 90, branches: 80, statements: 90 },

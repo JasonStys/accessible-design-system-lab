@@ -92,7 +92,7 @@ test("theme, density, direction, and reduced motion remain operable", async ({
   await page.getByRole("button", { name: "Theme: light" }).click();
   await page.getByRole("button", { name: "Density: comfortable" }).click();
   await page.getByRole("button", { name: "Direction: LTR" }).click();
-  const application = page.locator("[data-theme]");
+  const application = page.locator("#root > [data-theme]");
   await expect(application).toHaveAttribute("data-theme", "dark");
   await expect(application).toHaveAttribute("data-density", "compact");
   await expect(application).toHaveAttribute("dir", "rtl");

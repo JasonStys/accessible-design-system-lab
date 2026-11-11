@@ -1,0 +1,95 @@
+/** File: workspace.css
+ * Purpose: Keep the practical authoring surface readable alongside the original catalog at narrow widths.
+ * Selectors/variables: authoring-grid, preview, actions, source, error; source anchors docs/code-index.md.
+ */
+.authoring-workspace {
+  margin-block: 2rem;
+  border: 1px solid var(--ds-color-border);
+  border-radius: var(--ds-radius-lg);
+  padding: clamp(1rem, 3vw, 2rem);
+  background: var(--ds-color-surface);
+}
+.authoring-heading {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: start;
+}
+.authoring-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.5rem;
+}
+.authoring-grid > section {
+  min-width: 0;
+}
+.authoring-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: end;
+  margin-block: 0.75rem;
+}
+.authoring-workspace label {
+  display: grid;
+  gap: 0.4rem;
+  margin-block: 0.65rem;
+  font-weight: 600;
+}
+.authoring-workspace textarea,
+.authoring-workspace select {
+  box-sizing: border-box;
+  max-width: 100%;
+  width: 100%;
+  padding: 0.65rem;
+  border: 1px solid var(--ds-color-border);
+  border-radius: 0.35rem;
+  background: var(--ds-color-surface);
+  color: var(--ds-color-text);
+  font: inherit;
+}
+.authoring-workspace textarea {
+  font-family: var(--ds-font-mono);
+  font-size: 0.875rem;
+  resize: vertical;
+}
+.authoring-workspace :focus-visible {
+  outline: 0.2rem solid var(--ds-color-focus);
+  outline-offset: 0.15rem;
+}
+.authoring-preview {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  color: var(--ds-color-text);
+  background: var(--ds-color-surface);
+  border: 1px solid var(--ds-color-border);
+  border-radius: 0.5rem;
+  min-height: 12rem;
+  overflow-wrap: anywhere;
+}
+.authoring-preview h2,
+.authoring-preview h3,
+.authoring-preview p {
+  margin-block: 0.3rem;
+}
+.authoring-source {
+  overflow: auto;
+  max-height: 28rem;
+  padding: 1rem;
+  background: var(--ds-color-canvas);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.authoring-error {
+  color: var(--ds-color-danger);
+  font-weight: 700;
+}
+@media (max-width: 54rem) {
+  .authoring-grid {
+    grid-template-columns: 1fr;
+  }
+  .authoring-heading {
+    display: block;
+  }
+}
