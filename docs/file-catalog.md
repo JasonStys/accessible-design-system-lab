@@ -58,6 +58,9 @@
 
 ## Documentation
 
+- `scripts/browser-runner-policy.mjs` and `scripts/browser-runner-policy.test.mjs` — actual workflow and mutation regressions for the two bounded signed browser-setup recipes; original acceptance commands remain mandatory.
+- `docs/reports/browser-runner-setup-2026-11-11.md` — actual pre-test DNS failure evidence, CI-only repair, primary references and pending hosted verification boundary.
+
 `docs/` contains architecture, API, accessibility, tokens, complexity, testing, operations, research,
 an ADR, generated code locations, and evidence reports. README links to each reader-oriented entry.
 

@@ -174,6 +174,26 @@ declaration and important-variable locations. Regenerate after source edits.
 - Line 129: `extract_archive`
 - Line 185: `main`
 
+## `scripts/browser-runner-policy.mjs`
+
+- Line 7: `officialMirrorStep`
+- Line 11: `job`
+- Line 12: `lines`
+- Line 13: `starts`
+- Line 18: `start`
+- Line 19: `next`
+- Line 25: `validateBrowserSetup`
+- Line 26: `name`
+- Line 27: `text`
+- Line 43: `commands`
+- Line 53: `command`
+- Line 58: `install`
+- Line 61: `acceptance`
+
+## `scripts/browser-runner-policy.test.mjs`
+
+- Line 11: `original`
+
 ## `scripts/build-native.mjs`
 
 - Line 16: `root`
