@@ -273,3 +273,22 @@ for (const [label, corrupt] of [
     );
   });
 }
+
+test("current installed edition exposes actual XML and source relationships", () => {
+  const document = fileURLToPath(
+    new URL(
+      "../docs/reports/windows-application-guide-1.1.0.docx",
+      import.meta.url,
+    ),
+  );
+  const observed = publicationText(
+    document,
+    "docs/reports/windows-application-guide-1.1.0.docx",
+  );
+  assert.match(observed, /Jason Stys/);
+  assert.match(observed, /13dac81ab3819cd2208d96e4061e5e5484fc9dde/);
+  assert.match(observed, /word\/document|manufacturing|Manufacturing/);
+  assert.throws(() =>
+    publicationText(document, "docs/reports/unknown-current.docx"),
+  );
+});

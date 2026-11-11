@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "repository": "accessible-design-system-lab",
+  "runtimeVersion": "1.1.0",
+  "runtimeSource": "13dac81ab3819cd2208d96e4061e5e5484fc9dde",
+  "createdAt": "2026-11-11T16:21:02.542Z",
+  "author": "Jason Stys",
+  "document": "windows-application-guide-1.1.0.docx",
+  "sha256": "25a648748eb0a4417d36f38ab2abafbd896d2ec480199966e640993c1d1ac10c",
+  "screenshots": [
+    {
+      "file": "native-authored-blueprint.png",
+      "sha256": "741b9105357a6ad218832fa76f6e67680a5899be8528a00d1decce5caf829cd1",
+      "width": 2079,
+      "height": 1407,
+      "caption": "The actual installed blueprint workspace shows an edited shift review, its JSON input and working tab preview."
+    },
+    {
+      "file": "native-project-and-export.png",
+      "sha256": "991830b38ada6b20f30847ecb5ed8935476a78be573da19f04f012c58311640b",
+      "width": 2079,
+      "height": 1407,
+      "caption": "The actual installed workspace preserves its authored project and export controls. Generated React and CSS were checked by an independent consumer."
+    }
+  ],
+  "snippets": [
+    {
+      "file": "src/authoring/project.ts",
+      "first": 422,
+      "last": 435,
+      "sha256": "98484604ecf726cfd82e0c8507f9f2d36c3d06d3ed64d3b4d8f309774f536646",
+      "url": "https://github.com/JasonStys/accessible-design-system-lab/blob/13dac81ab3819cd2208d96e4061e5e5484fc9dde/src/authoring/project.ts#L422"
+    }
+  ],
+  "observedTests": [
+    {
+      "name": "Independent distribution",
+      "observed": "Downloaded provider assets, sidecar and installed file identities matched. The complete installed app was used; installation resources remained byte-identical.",
+      "result": "Passed"
+    },
+    {
+      "name": "Actual app use and restart",
+      "observed": "The original installed consumer passed actual component interactions, schema/invalid-input checks, exact React/CSS/project exports, independent generated-code consumption, retained revisions and two normal exits.",
+      "result": "Passed"
+    },
+    {
+      "name": "Source and security",
+      "observed": "All current main workflows passed before publication. All configured exact-source processed CodeQL categories had zero raw findings and zero open alerts.",
+      "result": "Passed"
+    },
+    {
+      "name": "Individual shortcut",
+      "observed": "Desktop and Start-menu targets were read back against the installed version. Normal default-profile shortcut activation is separate from full installed executable acceptance.",
+      "result": "Verified"
+    }
+  ],
+  "visualReview": "all four pages individually approved",
+  "reviewer": "root",
+  "reviewedPageHashes": {
+    "page-1.png": "0622c84c8a1c32f80a71c3e2a55007840b43ae88303bc4c78c549d15ce616f73",
+    "page-2.png": "3124c972ddb25e3587805d95bf6d1750cd7a5e3fcea268854636ff2112ff424a",
+    "page-3.png": "f8ef12fbf02cc9bcd3001e5ef196ef98132eeaa52db8aa792cb8fec1629e341f",
+    "page-4.png": "18a27653f025ca694221458e280795f9cbe7aeb5fa2c97b40f53b60fd547aefa"
+  },
+  "privateTestInputsOnly": true
+}

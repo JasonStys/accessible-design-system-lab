@@ -437,6 +437,8 @@ declaration and important-variable locations. Regenerate after source edits.
 - Line 167: `bytes`
 - Line 168: `central`
 - Line 267: `bytes`
+- Line 278: `document`
+- Line 284: `observed`
 
 ## `scripts/run-browser-tests.mjs`
 
